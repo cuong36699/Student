@@ -15,16 +15,16 @@
 				</div>
 			</div>
 			<div class="col-sm-6">
-				<div class="pull-right">
-					<div style="margin-top: 6px" class="input-group">
-						<a style="color:black;border-radius:8px" class="btn btn-warning" href="{{ URL::previous() }}">{{ trans('course/show.bt_back') }} <i class="fa fa-arrow-left"></i></a>	
+				<div class="pull-right notify">
+					<div class="input-group">
+						<a class="btn btn-warning button botron" href="{{ URL::previous() }}"><i class="fa fa-arrow-left"></i></a>	
 					</div>
 				</div>
 			</div>
 		</div>
-		<div style="border-radius: 8px;border-color :gray;border-style: solid;border-width:1px;padding-left:10px;padding-right: 10px" >
+		<div class="khung">
 			<br>
-			<h3 style="text-align: center;font-family:sans-serif;color: red">{{ trans('course/show.st_infoCourse') }} <p>[{{$lop_show->course_name}}]</p> </h3>
+			<h3 class="h3info">{{ trans('course/show.st_infoCourse') }} <p>[{{$lop_show->course_name}}]</p> </h3>
 			<hr>
 			<div class="form-group row">
 				<div class="col-md-12">	
@@ -35,7 +35,7 @@
 			<div class="form-group row">
 				<div class="col-md-12">	
 					{!! Form::label('', trans('course/show.st_dpName'), ['class'=>'col-md-5 control-label fontchu']) !!}
-					<a style="color: blue" class="fontchitiet" href="{{ route('department.show',$lop_show->department->id) }}">[{{$lop_show->department->department_name}}]</a>
+					<a class="fontchitiet chuxanh" href="{{ route('department.show',$lop_show->department->id) }}">[{{$lop_show->department->department_name}}]</a>
 				</div>
 			</div>
 			<div class="form-group row">
@@ -51,17 +51,16 @@
 				</div>
 			</div>
 			<hr>
-			<div style="text-align: center;">
-				{!! Form::label('', trans('course/show.st_list'), ['class'=>'col-md-6 control-label fontchu','style'=>'color:red']) !!}
+			<div class="center">
+				{!! Form::label('', trans('course/show.st_list'), ['class'=>'col-md-6 control-label fontchu chudo']) !!}
 			</div>
-			<div style="border-color :gray;border-style: solid;border-width:1px;padding-left:10px;padding-right: 10px" >
+			<div class="khung">
 				<div class="form-group row">
 					@foreach ($students as $sv)
 					<div class="col-md-10">
-						<?php $slsv=2 ?>
 						<br>
 						<p class="fontchu">
-							<a style="color: blue" href="{{ route('student.show',$sv->id) }}">{{ trans('course/show.st_name') }} {{$sv->full_name}}
+							<a class="chuxanh" href="{{ route('student.show',$sv->id) }}">{{ trans('course/show.st_name') }} {{$sv->full_name}}
 								<c>
 									[{{ trans('course/show.st_ids') }}{{$sv->id}}]
 								</c>
@@ -83,22 +82,34 @@
 							<p>
 								{{ trans('course/show.st_hometown') }} {{$sv->home_town}}
 							</p>
-							
 						</p>
 						<hr>						
 					</div>
-					<div class="col-md-2">
-						<div style="text-align:center;height:150px;width:150px;margin-top: 30px;border-radius: 8px;
-						border-color:gray;border-style:solid;border-width:1px;">
-						<a href="{{ route('student.show',$sv->id) }}">
-							<img src="{{ asset('hinhanh/'.$sv->avatar) }}" id="impPrev" alt="--Ảnh đại diện--" class="img-rounded" alt="" width="149" height="148">
+					<div class="imagecourse">
+						<a value="{{ $sv->id }}" data-id="{{$sv->id}}" data-toggle="modal" href='#show-{{$sv->id}}'>	
+							<img src="{{ asset('hinhanh/'.$sv->avatar) }}" class="img-rounded" width="140px" height="140px">
 						</a>
+						<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  id="show-{{$sv->id}}" >
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div  class="modal-header">
+										<h4  class="modal-title">[{{$sv->full_name}}]</h4>
+									</div>
+									<div class="modal-body">
+										<img src="{{ asset('hinhanh/'.$sv->avatar) }}" class="img-rounded">
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-warning button botron" data-dismiss="modal"><i class="fa fa-arrow-left"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>	
-				</div>
-				@endforeach							
-			</div>	
-		</div>
-		<br>
-	</div>	
+					@endforeach							
+				</div>	
+			</div>
+			<br>
+		</div>	
+	</div>
 </div>
 @endsection

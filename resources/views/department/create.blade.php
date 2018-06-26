@@ -15,16 +15,18 @@
 				</div>
 			</div>
 			<div class="col-sm-6">
-				<div class="pull-right">
-					<div style="margin-top: 6px" class="input-group">
-					<a style="color:black;border-radius:8px" class="btn btn-warning" href="{{ URL::previous() }}">{{ trans('department/create.bt_back') }} <i class="fa fa-arrow-left"></i></a>	
+				<div class="pull-right notify">
+					<div class="input-group">
+						<a class="btn btn-warning button botron" href="{{ route('department.index') }}">
+							<i class="fa fa-arrow-left"></i>
+						</a>	
 					</div>
 				</div>
 			</div>
 		</div>
-		<div style="border-radius: 8px;border-color :gray;border-style: solid;border-width:1px;padding-left:10px;padding-right: 10px" >
+		<div class="khung">
 			<br>
-			<h3 style="text-align: center;font-family:sans-serif;color: red">{{ trans('department/create.st_infoDepartment') }}</h3>
+			<h3 class="h3info">{{ trans('department/create.st_infoDepartment') }}</h3>
 			<hr>
 			<div class="form-group row" >
 				{!! Form::label('', trans('department/create.st_dpName'), ['class' => 'col-md-3 control-label fontchu']) !!}
@@ -41,7 +43,7 @@
 						'Kiến trúc'=>'Kiến trúc',
 						'Tài chính – Ngân hàng'=>'Tài chính – Ngân hàng',
 						],'',['class' => 'form-control']) !!}
-						<span style="color: red" class="" class="text-danger">{{  $errors->first('department_name') }}</span>
+						<span class="text-danger chudo">{{  $errors->first('department_name') }}</span>
 					</div>
 				</div>
 				{{--  --}}
@@ -55,38 +57,39 @@
 							'Trung cấp'=>'Trung cấp',
 							'Thời vụ'=>'Thời vụ',
 							],'',['class' => 'form-control']) !!}
-							<span style="color: red" class="" class="text-danger">{{  $errors->first('degree') }}</span>
+							<span class="text-danger chudo">{{  $errors->first('degree') }}</span>
 						</div>
 					</div>
 					{{--  --}}
 					<hr>
-					<h3 style="text-align: center;font-family:sans-serif;color: red">{{ trans('department/create.st_infoYear')}}</h3>
+					<h3 class="h3info">{{ trans('department/create.st_infoYear')}}</h3>
 					<br>
 					<div class="form-group row">
 						{!! Form::label('', trans('department/create.st_year'), ['class' => 'col-md-2 control-label fontchu']) !!}
 						<div class="col-sm-10 {{$errors->has('graduation_year') ? 'has-error' : '' }}">
 							{!! Form::selectYear('graduation_year', $year , $year-6 ,'',['class' => 'form-control']) !!}
-							<span style="color: red" class="" class="text-danger">{{  $errors->first('graduation_year') }}</span>
+							<span class="text-danger chudo">{{  $errors->first('graduation_year') }}</span>
 						</div>
 					</div>
 
 				</div>
 				{{-- button --}}
 				<br>
-				<div style="float: right;" class="col-md-2">
-					<div class="form-group row col-md-12">
-						<button style="border-radius: 8px" class="btn btn-primary" type="submit">{{ trans('department/create.bt_create')}} <i class="fa fa-check"></i></button>
+				{{-- button --}}
+				<div class="form-group benphai">
+					<div class="col-md-2">
+						<button class="btn btn-primary button botron" type="submit">{{ trans('student/create.bt_create') }} <i class="fa fa-check"></i></button>
 					</div>
 				</div>
-				<div style="float: right;" class="col-md-1-2">
-					<div style="float:left;" class="form-group row col-md-12">
-						<a style="color:black;border-radius:8px" class="btn btn-warning" href="{{ URL::previous() }}">{{ trans('department/create.bt_back')}} <i class="fa fa-arrow-left"></i></a>	
+				<div class="form-group benphai">
+					<div class="col-md-2">
+						<a class="btn btn-warning button botron" href="{{ route('student.index') }}">{{ trans('student/create.bt_back') }} <i class="fa fa-arrow-left"></i></a>	
 					</div>
 				</div>
 			</div>
-
 		</div>
-
-		{!! Form::close() !!}
-		{{-- footer --}}
-		@endsection
+	</div>
+</div>
+{!! Form::close() !!}
+{{-- footer --}}
+@endsection

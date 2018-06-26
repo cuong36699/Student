@@ -1,7 +1,6 @@
 @extends('../layouts/teamplade')
 @section('content')
 {{-- expr --}}
-
 <div class="container">
 	<div class="breadcrumbs">
 		<div class="col-sm-6 row">
@@ -15,23 +14,16 @@
 			</div>
 		</div>
 		<div class="col-sm-6">
-			<div class="pull-right">
-				<div style="margin-top: 6px" class="input-group">
-					<a style="color:black;border-radius:8px" class="btn btn-warning" href="{{ URL::previous() }}">{{ trans('course/create.bt_back') }} <i class="fa fa-arrow-left"></i></a>	
+			<div class="pull-right notify">
+				<div class="input-group">
+					<a class="btn btn-warning button botron" href="{{ URL::previous() }}"><i class="fa fa-arrow-left"></i></a>	
 				</div>
 			</div>
 		</div>
 	</div>
-	{{-- so sánh khoa có tồn tại chưa --}}
-	<div style="visibility:hidden">
-		<?php $pos=1 ?>
-		@foreach ($department_all as $vi)
-		<?php print $pos++ ?>
-		@endforeach
-	</div>
-	<h3 style="text-align: center;font-family:sans-serif;color: red">{{ trans('course/create.st_infoCreate') }}</h3>
+	<h3 class="h3info">{{ trans('course/create.st_infoCreate') }}</h3>
 	<hr>
-	<table style="text-align: center;" class="table table-striped table-bordered">
+	<table class="table table-striped table-bordered center">
 		<thead>
 			<tr>
 				<th>{{ trans('course/create.st_dpName') }}</th>
@@ -49,17 +41,15 @@
 				<td>{!! $departments->degree !!}</td>
 				<td>{!! $departments->graduation_year !!}</td>
 				{{-- xem  --}}
-				<td><a  style="border-radius: 8px" href="{{ route('department.show',$departments->id) }}" class="btn btn-info">{{ trans('course/create.bt_create') }}</a>
-				</tr>
-				@endforeach
-			</tbody>
-		</table>
-		{{-- phân trang --}}
-		<div style="text-align: center;" class="form-group">
-			{!! $department_all->links() !!}
-		</div>
+				<td><a href="{{ route('department.show',$departments->id) }}" class="btn btn-info button botron">{{ trans('course/create.bt_create') }}</a></td>
+			</tr>
+			@endforeach
+		</tbody>
+	</table>
+</div>
+{{-- phân trang --}}
+<div class="form-group center">
+	{!! $department_all->links() !!}
+</div>
+@endsection
 
-		{{-- footer --}}
-
-	</div>
-	@endsection

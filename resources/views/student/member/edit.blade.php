@@ -1,7 +1,7 @@
 <br>
-<h3 style="text-align: center;font-family:sans-serif;color: red">{{ trans('student/edit.st_member') }}</h3>
+<h3 class="h3info">{{ trans('student/edit.st_member') }}</h3>
 <hr>
-<div style="font-size:20px;" class="form-group row">
+<div class="form-group row chu20">
 	{!! Form::label('', trans('student/edit.st_union'), ['class' => 'col-md-5 control-label fontchu']) !!}
 	<div class="col-sm-12">
 		{!! Form::label('', trans('student/edit.st_out'), ['class' =>'control-label']) !!}
@@ -15,11 +15,11 @@
 	{!! Form::label('', trans('student/edit.st_date_union'), ['class' => 'col-md-5 control-label fontchu']) !!}
 	<div class="col-sm-12 {{ $errors->has('date_union_member') ? 'has-error' : '' }}">
 		{!! Form::date('date_union_member', $student_edit->member->date_union_member, ['class' => 'form-control']) !!}
-		<span style="color: red" class="text">{{ $errors ->first('date_union_member') }}</span>
+		<span class="text chudo">{{ $errors ->first('date_union_member') }}</span>
 	</div>
 </div>
 {{--  --}}
-<div style="font-size:20px;" class="form-group row">
+<div class="form-group row chu20">
 	{!! Form::label('', trans('student/edit.st_adherer'), ['class' => 'col-md-5 control-label fontchu']) !!}
 	<div class="col-sm-12">
 		{!! Form::label('', trans('student/edit.st_out'), ['class' =>'control-label']) !!}
@@ -33,6 +33,6 @@
 	{!! Form::label('', trans('student/edit.st_date_adherer'), ['class' => 'col-md-5 control-label fontchu']) !!}
 	<div class="col-sm-12 {{ $errors->has('date_adherer_member') ? 'has-error' : '' }}">
 		{!! Form::date('date_adherer_member', $student_edit->member->date_adherer_member, ['class' => 'form-control']) !!}
-		<span style="color: red" class="text">{{ $errors ->first('date_adherer_member') }}</span>
+		<span class="text chudo">{{ $errors ->first('date_adherer_member') }}</span>
 	</div>
 </div>

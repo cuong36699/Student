@@ -11,8 +11,8 @@
 			</div>
 		</div>
 		<div class="col-sm-6 row">
-			<div class="pull-right">
-				<div style="margin-top: 6px;margin-left: 10%" class="input-group" id="adv-search">
+			<div class="pull-right notify">
+				<div class="input-group" id="adv-search">
 					<input type="hidden" id="xoa" name="xoa">
 					<input type="text" class="form-control" id="search"
 					value="{{ request()->session()->get('search') }}"
@@ -37,9 +37,9 @@
 	</div>
 </div>
 </div>
-<h3 style="text-align: center;font-family:sans-serif;color: red">{{ trans('department/index.st_infoDepartment') }}</h3>
+<h3 class="h3info">{{ trans('department/index.st_infoDepartment') }}</h3>
 <hr>
-<table style="text-align: center;" class="table table-striped table-bordered">
+<table class="table table-striped table-bordered center">
 	<thead class="thead-dark">
 		<tr>
 			<th>{{ trans('department/index.st_id') }}</th>
@@ -60,12 +60,12 @@
 			<td>{!! $departments->degree !!}</td>
 			<td>{!! $departments->graduation_year !!}</td>
 			{{-- xem  --}}
-			<td style="text-align: center;">
+			<td class="center">
 				<div class="dropdown">
-					<button style="border-radius: 8px;" class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<button class="btn btn-info dropdown-toggle button botron" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						{{ trans('department/index.bt_action') }}
 					</button>
-					<div style="text-align: center;" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<div class="dropdown-menu center" aria-labelledby="dropdownMenuButton">
 						<a class="form-control" href="{{ route('department.show',$departments->id) }}">{{ trans('department/index.st_show') }} <i class="fa fa-list"></i></a>
 						<a class="form-control" href="{{ route('department.edit',$departments->id) }}">{{ trans('department/index.st_edit') }} <i class="fa fa-edit"></i></a>
 					</div>
@@ -74,7 +74,9 @@
 			{{-- xóa --}}
 			<td>
 				{!! Form::open(['method'=>'Delete','route'=>['department.destroy',$departments->id]]) !!}
-				<a style="border-radius: 8px" value="{{ $departments->id }}" data-id="{{$departments->id}}" class="btn btn-danger" data-toggle="modal" href='#modal-{{$departments->id}}'>{{ trans('department/index.bt_delete') }} <i class="fa fa-trash-o"></i></i>
+				<a value="{{ $departments->id }}" data-id="{{$departments->id}}" class="btn btn-danger button botron" data-toggle="modal" href='#modal-{{$departments->id}}'>
+					{{ trans('department/index.bt_delete') }} 
+					<i class="fa fa-trash-o"></i>
 				</a> 
 				<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  id="modal-{{$departments->id}}" >
 					<div class="modal-dialog">
@@ -83,17 +85,24 @@
 								<h4 class="modal-title">{{ trans('department/index.st_confirm') }}</h4>
 							</div>
 							<div class="modal-body">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								<h4 class="fontchu">{{ trans('department/index.bt_contentConfirm') }} <a style="color: red" href="{{ route('department.show',$departments->id) }}">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									&times;
+								</button>
+								<h4 class="fontchu">{{ trans('department/index.bt_contentConfirm') }} <a class="chudo" href="{{ route('department.show',$departments->id) }}">
 									[{{$departments->department_name}}]</a>
 								</h4>
 							</div>
 							<div class="modal-footer">
 								{!! Form::open(['method'=>'Delete','route'=>['department.destroy',$departments->id]]) !!}
-								<button class="btn btn-primary" style="border-radius: 8px" type="submit">{{ trans('department/index.bt_yes') }} <i class="fa fa-check"></i></button>
+								<button class="btn btn-primary button botron" type="submit">
+									{{ trans('department/index.bt_yes') }} 
+									<i class="fa fa-check"></i>
+								</button>
 								{!! Form::close() !!}
-								<button style="border-radius: 8px" type="button" class="btn btn-warning" data-dismiss="modal">{{ trans('department/index.bt_cancel') }} <i class="fa fa-arrow-left"></i></button>
-
+								<button type="button" class="btn btn-warning button botron" data-dismiss="modal">
+									{{ trans('department/index.bt_cancel') }} 
+									<i class="fa fa-arrow-left"></i>
+								</button>
 							</div>
 						</div>
 					</div>
@@ -103,11 +112,8 @@
 		@endforeach
 	</tbody>
 </table>
-{{-- phân trang --}}
-<div style="text-align: center;" class="form-group">
-	{!! $department_all->links() !!}
 </div>
-
-{{-- footer --}}
-
+{{-- phân trang --}}
+<div class="form-group center">
+	{!! $department_all->links() !!}
 </div>

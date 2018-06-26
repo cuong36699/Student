@@ -15,16 +15,16 @@
 				</div>
 			</div>
 			<div class="col-sm-6">
-				<div class="pull-right">
-					<div style="margin-top: 6px" class="input-group">
-						<a style="color:black;border-radius:8px" class="btn btn-warning" href="{{ URL::previous() }}">{{ trans('course/edit.bt_back') }} <i class="fa fa-arrow-left"></i></a>	
+				<div class="pull-right notify">
+					<div class="input-group">
+						<a class="btn btn-warning button botron" href="{{ URL::previous() }}"><i class="fa fa-arrow-left"></i></a>	
 					</div>
 				</div>
 			</div>
 		</div>
-		<div style="border-color :gray;border-style: solid;border-width:1px;padding-left:10px;padding-right: 10px" >
+		<div class="khung">
 			<br>
-			<h3 style="text-align: center;font-family:sans-serif;color: red">{{ trans('course/edit.st_infoEdit') }}</h3>
+			<h3 class="h3info">{{ trans('course/edit.st_infoEdit') }}</h3>
 			<hr>
 			<div class="form-group row">
 				{!! Form::label('', trans('course/edit.st_course'), ['class' => 'col-md-3 control-label fontchu']) !!}
@@ -32,20 +32,21 @@
 					{!! Form::text('course_name', $lop_edit->course_name, ['class' => 'form-control'])
 					!!}
 					<br>
-					<span style="color: red" class="" class="text-danger">{{  $errors->first('course_name') }}</span>
+					<span class="text-danger">{{  $errors->first('course_name') }}</span>
 				</div>	
 			</div>		
 		</div>
 		{{-- button --}}
 		<br>
-		<div style="float: right;" class="col-md-2">
-			<div class="form-group row col-md-12">
-				<button style="border-radius: 8px" class="btn btn-primary" type="submit">{{ trans('course/edit.bt_create') }} <i class="fa fa-check"></i></button>
+	{{-- button --}}
+		<div class="form-group benphai">
+			<div class="col-md-2">
+				<button class="btn btn-primary button botron" type="submit">{{ trans('course/edit.bt_create') }} <i class="fa fa-check"></i></button>
 			</div>
 		</div>
-		<div style="float: right;" class="col-md-1-2">
-			<div style="float:left;" class="form-group row col-md-12">
-				<a style="color:black;border-radius:8px" class="btn btn-warning" href="{{ URL::previous() }}">{{ trans('course/edit.bt_back') }} <i class="fa fa-arrow-left"></i></a>	
+		<div class="form-group benphai">
+			<div class="col-md-2">
+				<a class="btn btn-warning button botron" href="{{ URL::previous() }}">{{ trans('course/edit.bt_back') }} <i class="fa fa-arrow-left"></i></a>	
 			</div>
 		</div>
 	</div>

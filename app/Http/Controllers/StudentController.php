@@ -20,12 +20,12 @@ class StudentController extends Controller
     public function changeLanguage($language)
     {   
         Session::put('website_language', $language);
-        if ($language=='vi') {
-            $languaged='Việt Nam';
-            Session::flash('ketqua', 'Đã thây đổi ngôn ngữ'. ' '. $languaged);
-        }elseif($language=='en') {
-            $languaged='English';
-            Session::flash('ketqua', 'Changed language'. ' '. $languaged);
+        if ($language == 'vi') {
+            $languaged = 'Việt Nam';
+            Session::flash('ketqua', 'Đã thây đổi ngôn ngữ' . ' ' . $languaged);
+        } elseif ($language == 'en') {
+            $languaged = 'English';
+            Session::flash('ketqua', 'Changed language' . ' ' . $languaged);
         }
 
         return redirect()->back();
@@ -59,7 +59,7 @@ class StudentController extends Controller
         $course_name = Course::pluck('course_name', 'id');
         $deparments = Department::pluck('department_name', 'id')->all();
 
-        return view('student.create', compact('course_name','deparments'));
+        return view('student.create', compact('course_name', 'deparments'));
     }
 
     public function showCourseInDepartment(Request $request)
@@ -80,7 +80,7 @@ class StudentController extends Controller
     public function store(StoreBlogStudent $request)
     {
         // nhận tên thời gian image và di chuyển hình vào thư mục hình ảnh
-        $image = time(). '.'. $request['avatar']->getClientOriginalName();
+        $image = time() . '.' . $request['avatar']->getClientOriginalName();
         request()->avatar->move(public_path('hinhanh'), $image);
         // 
         $data = $request->all();
@@ -99,7 +99,7 @@ class StudentController extends Controller
         $new_student->courses()->attach($course_id);
         //
         if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Đã tạo thành công thông tin sinh viên'. ' '. $data['full_name']);
+            Session::flash('ketqua', 'Đã tạo thành công thông tin sinh viên' . ' ' . $data['full_name']);
         }else{
             Session::flash('ketqua', 'created student' . ' ' .  $data['full_name']);
         }
@@ -118,6 +118,7 @@ class StudentController extends Controller
         $student = Student::with('member', 'risident')->findOrFail($id);
         // lay lop cuoi
         $course = $student->courses->last();
+        
         return view('student.show', compact('student', 'course'));
     }
 
@@ -146,13 +147,13 @@ class StudentController extends Controller
      */
     public function update(UpdateBlogStudent $request, $id)
     {
-        // 
         $data_student = Student::findOrFail($id);
         $data_rq = $request->all();
+        // 
         if ($request['avatar'] == null) {
             $data_rq['avatar'] = $data_student->avatar;
         }else{
-            $image = time(). '.'. $request['avatar']->getClientOriginalName();
+            $image = time() . '.' . $request['avatar']->getClientOriginalName();
             request()->avatar->move(public_path('hinhanh'), $image);
             $data_rq['avatar'] = $image;
         }
@@ -170,9 +171,9 @@ class StudentController extends Controller
             $data_student->courses()->attach($course_id);
         }
         if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Đã sửa thành công thông tin hồ sơ sinh viên'. ' '. $request['full_name']);
-        }else{
-            Session::flash('ketqua', 'Edited Student'. ' '. $request['full_name']);
+            Session::flash('ketqua', 'Đã sửa thành công thông tin hồ sơ sinh viên' . ' ' . $request['full_name']);
+        } else {
+            Session::flash('ketqua', 'Edited Student' . ' ' . $request['full_name']);
         }
 
         return redirect()->route('student.show', [$data_student->id]);  
@@ -189,9 +190,9 @@ class StudentController extends Controller
         $data = Student::findOrFail($id);
         $data->delete();
         if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Đã xóa sinh viên tên'.' '.$data->full_name);
-        }else{
-            Session::flash('ketqua', 'Deleted student'.' '.$data->full_name);
+            Session::flash('ketqua', 'Đã xóa sinh viên tên' . ' ' . $data->full_name);
+        } else {
+            Session::flash('ketqua', 'Deleted student' . ' ' . $data->full_name);
         }
         return redirect()->back();
     }

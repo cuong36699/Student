@@ -1,7 +1,7 @@
 <br>
-<h3 style="text-align: center;font-family:sans-serif;color: red">{{ trans('student/create.st_member') }}</h3>
+<h3 class="h3info">{{ trans('student/create.st_member') }}</h3>
 <hr>
-<div style="font-size:20px;" class="form-group row">
+<div class="form-group row chu20">
 	{!! Form::label('', trans('student/create.st_union') , ['class' => 'col-md-5 control-label fontchu']) !!}
 	<div class="col-sm-12">
 		{!! Form::label('', trans('student/create.st_out'), ['class' =>'control-label']) !!}
@@ -14,7 +14,7 @@
 <div id="union_member">	
 </div>
 
-<div style="font-size:20px;" class="form-group row">
+<div class="form-group row chu20">
 	{!! Form::label('', trans('student/create.st_adherer'), ['class' => 'col-md-5 control-label fontchu']) !!}
 	<div class="col-sm-12">
 		{!! Form::label('', trans('student/create.st_out'), ['class' =>'control-label']) !!}
