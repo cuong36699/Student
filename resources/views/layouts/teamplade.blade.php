@@ -19,6 +19,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/flag-icon.min.css') }}" >
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/cs-skin-elastic.css') }}" >
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/scss/style.css') }}" >
+    {{-- css view admin --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cssviewadmin.css') }}" >
     {{-- css loading --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/loading.css') }}" >
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>

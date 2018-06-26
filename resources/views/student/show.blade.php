@@ -16,8 +16,8 @@
 			</div>
 			<div class="col-sm-6">
 				<div class="pull-right">
-					<div style="margin-top: 6px" class="input-group">
-						<a style="color:black;border-radius:8px" class="btn btn-warning" href="{{ URL::previous() }}">
+					<div class="input-group notify">
+						<a class="btn btn-warning button botron" href="{{ URL::previous() }}">
 							{{ trans('student/show.back_button') }}<i class="fa fa-arrow-left"></i></a>	
 						</div>
 					</div>
@@ -26,14 +26,14 @@
 		</div>
 		{{-- right --}}
 		<div class="containe col-md-6">
-			<div style="background-color: white;border-radius: 8px;border-color :gray;border-style: solid;border-width:1px;padding-left:10px;padding-right: 10px" >
+			<div class="khung">
 				<br>
-				<h3 style="text-align: center;font-family:sans-serif;color: red">{{ trans('student/show.st_info') }}
+				<h3 class="h3info">{{ trans('student/show.st_info') }}
 					<p>[{{$student->full_name}}]</p>
 				</h3>
 				<hr>
-				<div style="text-align: center;">
-					<a style="background-color: white" class="btn btn-primary" data-toggle="modal" href='#modal-id'>
+				<div class="center">
+					<a class="btn btn-primary khungtrang" data-toggle="modal" href='#modal-id'>
 						<img src="{{ asset('hinhanh/'.$student->avatar) }}" class="img-rounded" width="200" height="200">
 					</a>
 					<div class="modal fade" id="modal-id">
@@ -46,8 +46,7 @@
 									<img src="{{ asset('hinhanh/'.$student->avatar) }}" class="img-rounded">
 								</div>
 								<div class="modal-footer">
-									<button style="border-radius: 8px" type="button" class="btn btn-warning" data-dismiss="modal">
-										{{ trans('student/show.back_button') }}
+									<button type="button" class="btn btn-warning button botron" data-dismiss="modal">
 										<i class="fa fa-arrow-left"></i>
 									</button>
 								</div>
@@ -112,7 +111,7 @@
 				<div class="form-group row">
 					<div class="col-md-12 fontchu">
 						{!! Form::label('', trans('student/show.st_class'), ['class'=>'col-md-5 control-label']) !!}
-						<a style="color: blue" href="{{ route('course.show',$course->id) }}">
+						<a class="chuxanh" href="{{ route('course.show',$course->id) }}">
 							[{{$course->course_name}}]
 						</a>
 					</div>	
@@ -121,7 +120,7 @@
 				<div class="form-group row">
 					<div  class="col-md-12 fontchu">
 						{!! Form::label('', trans('student/show.st_department'), ['class'=>'col-md-5 control-label']) !!}
-						<a style="color: blue" href="{{ route('department.show',$course->department->id) }}">
+						<a class="chuxanh" href="{{ route('department.show',$course->department->id) }}">
 							[{{$course->department->department_name}}]
 						</a>
 					</div>	
@@ -129,24 +128,24 @@
 				<hr>
 				{{-- button cập nhật --}}
 				<div class="form-group row">
-					<div style="text-align: center;" class="col-md-12">
-						<a href="{{ route('student.edit',$student->id) }}" style="border-radius:8px;" class="btn btn-warning">{{ trans('student/show.edit_st') }} <i class="fa fa-edit"></i></a>
-						<a href="{{ url('violation/create',$student->id) }}" style="border-radius:8px;" class="btn btn-warning">{{ trans('student/show.create_vi') }} <i class="fa fa-check-square-o"></i></a>
-						<a href="{{ route('violation.show',$student->id) }}" style="border-radius:8px;" class="btn btn-info">{{ trans('student/show.show_vi') }} <i class="fa fa-list"></i></a>
+					<div class="col-md-12 center">
+						<a href="{{ route('student.edit',$student->id) }}" class="btn btn-warning button botron2">{{ trans('student/show.edit_st') }} <i class="fa fa-edit"></i></a>
+						<a href="{{ url('violation/create',$student->id) }}" class="btn btn-warning button botron3">{{ trans('student/show.create_vi') }} <i class="fa fa-check-square-o"></i></a>
+						<a href="{{ route('violation.show',$student->id) }}" class="btn btn-info button botron1">{{ trans('student/show.show_vi') }} <i class="fa fa-list"></i></a>
 					</div>
 				</div>
 			</div>
 		</div>
 		{{-- left --}}
-		<div style="" class="containe col-md-6">
-			<div style="background-color: white;border-radius: 8px;border-color :gray;border-style: solid;border-width:1px;padding-left:10px;padding-right: 10px" >
+		<div class="containe col-md-6">
+			<div class="khung">
 				<br>
-				<h3 style="text-align: center;font-family:sans-serif;color: red">{{ trans('student/show.st_detail') }}
+				<h3 class="h3info">{{ trans('student/show.st_detail') }}
 					<p>[{{$student->full_name}}]</p>
 				</h3>
 				<hr>
 				<div class="form-group row">
-					<h5 style="float: left;font-family:sans-serif;color: red">{{ trans('student/show.st_member') }}
+					<h5 class="h3info">{{ trans('student/show.st_member') }}
 					</h5>
 				</div>
 				<div class="form-group row">
@@ -184,7 +183,7 @@
 				{{-- thường trú --}}
 				<hr>
 				<div class="form-group row">
-					<h5 style="float: left;font-family:sans-serif;color: red">{{ trans('student/show.info_risident') }}
+					<h5 class="h3info">{{ trans('student/show.info_risident') }}
 					</h5>
 				</div>
 				<div class="form-group row">
@@ -220,7 +219,7 @@
 				{{-- Thông tin lớp khoa--}}
 				<hr>
 				<div class="form-group row">
-					<h5 style="float: left;font-family:sans-serif;color: red">{{ trans('student/show.info_course') }}
+					<h5 class="h3info">{{ trans('student/show.info_course') }}
 					</h5>
 				</div>
 				<div class="form-group row">

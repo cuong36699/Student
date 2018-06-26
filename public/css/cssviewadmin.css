@@ -1,0 +1,130 @@
+.notify{
+	margin-top: 6px;
+	margin-left: 3%;
+}
+
+.center{
+	text-align: center;
+}
+
+.benphai{
+	float: right;
+}
+
+.h3info{
+	text-align: center;
+	font-family: sans-serif;
+	color: red;
+}
+.button {
+    text-decoration: none;
+    display: inline-block;
+    -webkit-transition-duration: 0.1s; /* Safari */
+    transition-duration: 0.1s;
+    cursor: pointer;
+}
+
+.botron{
+	width: 120px;
+	color: #fff;
+	border-width:1px;
+	border-color: gray;
+	border-radius: 8px;
+	
+}
+.botron:hover {
+    background-color: #4CAF50;
+    color: black;
+}
+.botron:focus{
+    background: #FF6347;
+}
+/**/
+.botron1{
+	width: 135px;
+	color: #fff;
+	border-width:1px;
+	border-color: gray;
+	border-radius: 8px;
+	
+}
+.botron1:hover {
+    background-color: #4CAF50;
+    color: black;
+}
+.botron1:focus{
+    background: #FF6347;
+}
+/**/
+.botron2{
+	width: 125px;
+	color: #fff;
+	border-width:1px;
+	border-color: gray;
+	border-radius: 8px;
+	
+}
+.botron2:hover {
+    background-color: #4CAF50;
+    color: black;
+}
+.botron2:focus{
+    background: #FF6347;
+}
+/**/
+.botron3{
+	width: 153px;
+	color: #fff;
+	border-width:1px;
+	border-color: gray;
+	border-radius: 8px;
+	
+}
+.botron3:hover {
+    background-color: #4CAF50;
+    color: black;
+}
+.botron3:focus{
+    background: #FF6347;
+}
+.khung{
+	background-color: white;
+	border-radius: 8px;
+	border-color: black;
+	border-style: solid;
+	border-width:1px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.khungimage{
+	border-width: 1px;
+	border-style: solid;
+	text-align: center;
+	height: 150px;
+	width: 150px;
+	border-color:gray;
+	margin-left: 50px;
+	border-radius: 8px;
+}
+.khungtrang{
+	background-color: white;
+}
+.chudo{
+	color: red;
+}
+.chuxanh{
+	color: blue;
+}
+.chu20{
+	font-size: 20px;
+}
+.imagecourse{
+	text-align: center;
+	height: 140px;
+	width: 140px;
+	margin-top: 30px;
+	border-width: 1px;
+	border-radius: 8px;
+	border-style: solid;
+	border-color: gray;
+}
