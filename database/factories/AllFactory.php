@@ -15,6 +15,7 @@ $factory->define(App\Models\Student::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'home_town' => $faker->city,
         'avatar' => $faker->imageUrl($width = 640, $height = 480),    
+          
     ];
 });
 

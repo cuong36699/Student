@@ -1,4 +1,6 @@
 let mix = require('laravel-mix');
+const THEME_PATH = 'resources/assets/';
+const FRONTEND_PATH = 'public/';
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +13,13 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.js([ 
+ 	'resources/assets/js/app.js',
+ 	'resources/assets/js/bootstrap.js',
+ 	], FRONTEND_PATH + 'js' )
+ 	.copyDirectory(THEME_PATH + 'js' , FRONTEND_PATH + 'js')
+ 	.copyDirectory(THEME_PATH + 'ckeditor', FRONTEND_PATH + 'ckeditor')
+ 	.copyDirectory(THEME_PATH + 'css', FRONTEND_PATH + 'css')
+ 	.copyDirectory(THEME_PATH + 'hinhanh', FRONTEND_PATH + 'hinhanh')
+ 	.version();
+

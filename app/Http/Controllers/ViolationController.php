@@ -41,7 +41,7 @@ class ViolationController extends Controller
     {
         // 
     }
-   
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -62,7 +62,7 @@ class ViolationController extends Controller
         }
         if (config('app.locale') == 'vi') {
             Session::flash('ketqua', 'Đã tạo vi phạm cho sinh viên' . $student_data->full_name);
-        }else{
+        } else {
             Session::flash('ketqua', 'Created violation for' . $student_data->full_name);
         }
 
@@ -77,11 +77,11 @@ class ViolationController extends Controller
      */
     public function show($id)
     {
-        $sinhvien = Student::findOrFail($id);
+        $student_data = Student::findOrFail($id);
         // lấy lớp thông qua pivot 
-        $vipham = $sinhvien->violations()->where('student_id', $id)->get();
+        $violation = $student_data->violations()->where('student_id', $id)->get();
 
-        return view('violation.show', compact('vipham', 'sinhvien'));
+        return view('violation.show', compact('violation', 'student_data'));
     }
 
     /**
@@ -92,9 +92,9 @@ class ViolationController extends Controller
      */
     public function edit($id)
     {
-        $vipham_edit = Violation::findOrFail($id);
+        $violation_edit = Violation::findOrFail($id);
 
-        return view('violation.edit', compact('vipham_edit'));
+        return view('violation.edit', compact('violation_edit'));
     }
 
     /**
@@ -113,7 +113,7 @@ class ViolationController extends Controller
         $data->save();
         if (config('app.locale') == 'vi') {
             Session::flash('ketqua', 'Cập nhật thành công thông tin vi phạm!');
-        }else{
+        } else {
             Session::flash('ketqua', 'Updated for violation!');
         }
 
@@ -132,7 +132,7 @@ class ViolationController extends Controller
         $data->delete();
         if (config('app.locale') == 'vi') {
             Session::flash('ketqua', 'Đã xóa thành công vi phạm');
-        }else{
+        } else {
             Session::flash('ketqua', 'Deleted for violation!');
         }
 

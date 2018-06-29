@@ -52,5 +52,7 @@ return [
     'st_city' => 'City:',
     'st_pcode' => 'Postal Code:',
     'st_hphone' => 'Home Phone:',
+    // 
+    'warning' => '*Warning: You must select department to have class data',
 
 ];

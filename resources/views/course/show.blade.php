@@ -1,6 +1,5 @@
 @extends('../layouts/teamplade')
 @section('content')	
-{{-- expr --}}
 <div class="form-horizontal">
 	<div class="container col-md-12">
 		<div class="breadcrumbs">
@@ -24,24 +23,30 @@
 		</div>
 		<div class="khung">
 			<br>
-			<h3 class="h3info">{{ trans('course/show.st_infoCourse') }} <p>[{{$lop_show->course_name}}]</p> </h3>
+			<h3 class="h3info">{{ trans('course/show.st_infoCourse') }} 
+				<p>[{{$course_show->course_name}}]</p> 
+			</h3>
 			<hr>
 			<div class="form-group row">
 				<div class="col-md-12">	
 					{!! Form::label('', trans('course/show.st_id'), ['class'=>'col-md-5 control-label fontchu']) !!}
-					<label class="fontchitiet">[{{$lop_show->id}}]</label>
+					<label class="fontchitiet">
+						[{{$course_show->id}}]
+					</label>
 				</div>
 			</div>
 			<div class="form-group row">
 				<div class="col-md-12">	
 					{!! Form::label('', trans('course/show.st_dpName'), ['class'=>'col-md-5 control-label fontchu']) !!}
-					<a class="fontchitiet chuxanh" href="{{ route('department.show',$lop_show->department->id) }}">[{{$lop_show->department->department_name}}]</a>
+					<a class="fontchitiet chuxanh" href="{{ route('department.show',$course_show->department->id) }}">
+						[{{$course_show->department->department_name}}]
+					</a>
 				</div>
 			</div>
 			<div class="form-group row">
 				<div class="col-md-12">				
 					{!! Form::label('', trans('course/show.st_cName'), ['class'=>'col-md-5 control-label fontchu']) !!}
-					{!! Form::label('', $lop_show->course_name, ['class'=>'control-label fontchitiet']) !!}	
+					{!! Form::label('', $course_show->course_name, ['class'=>'control-label fontchitiet']) !!}	
 				</div>	
 			</div>
 			<div class="form-group row">
@@ -108,7 +113,6 @@
 					@endforeach							
 				</div>	
 			</div>
-			<br>
 		</div>	
 	</div>
 </div>

@@ -1,6 +1,5 @@
 @extends('../layouts/teamplade')
 @section('content')
-{{-- expr --}}
 <div class="container">
 	<div class="breadcrumbs">
 		<div class="col-sm-6 row">

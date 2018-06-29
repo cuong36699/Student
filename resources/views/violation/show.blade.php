@@ -18,7 +18,7 @@
 			<div class="col-sm-6">
 				<div class="pull-right">
 					<div class="input-group notify">
-						<a class="btn btn-warning button botron" href="{{ route('student.show',$sinhvien->id)}}">
+						<a class="btn btn-warning button botron" href="{{ route('student.show',$student_data->id)}}">
 							<i class="fa fa-arrow-left"></i>
 						</a>	
 					</div>
@@ -27,9 +27,9 @@
 		</div>
 		<div class="khung">
 			<br>
-			<h3 class="h3info">{{ trans('violation/show.st_infovio') }} <p>[{{$sinhvien->full_name}}]</p></h3>
+			<h3 class="h3info">{{ trans('violation/show.st_infovio') }} <p>[{{$student_data->full_name}}]</p></h3>
 			<hr>
-			@foreach ($vipham as $vp)
+			@foreach ($violation as $vp)
 			<h3 class="h3info">
 				{{ trans('violation/show.st_vio') }} [{{ $vp->id }}]
 			</h3>
@@ -89,7 +89,7 @@
 		<br>
 		<div class="form-group benphai">
 			<div class="col-md-2">
-				<a class="btn btn-warning button botron" href="{{ route('student.show', $sinhvien->id) }}">{{ trans('student/create.bt_back') }} <i class="fa fa-arrow-left"></i></a>	
+				<a class="btn btn-warning button botron" href="{{ route('student.show', $student_data->id) }}">{{ trans('student/create.bt_back') }} <i class="fa fa-arrow-left"></i></a>	
 			</div>
 		</div>
 	</div>

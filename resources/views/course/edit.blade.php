@@ -1,6 +1,6 @@
 @extends('../layouts/teamplade')
 @section('content')
-{!! Form::model($lop_edit, array('route' => array('course.update', $lop_edit->id), 'method' => 'put')) !!}
+{!! Form::model($lop_edit, array('route' => array('course.update', $lop_edit->id), 'method' => 'put', 'data-parsley-validate' => '')) !!}
 <div class="form-horizontal">
 	<div class="container col-md-12">
 		<div class="breadcrumbs">
@@ -29,16 +29,23 @@
 			<div class="form-group row">
 				{!! Form::label('', trans('course/edit.st_course'), ['class' => 'col-md-3 control-label fontchu']) !!}
 				<div class="col-sm-9 {{$errors->has('course_name') ? 'has-error' : '' }}" role="alert">
-					{!! Form::text('course_name', $lop_edit->course_name, ['class' => 'form-control'])
-					!!}
+					{!! Form::text('course_name',
+					 	$lop_edit->course_name, [
+					 	'class' => 'form-control',
+					 	'required' => '',
+					 	'maxlength' => '30',
+					 	'placeholder' => trans('course/edit.st_course'),
+					 	'data-parsley-maxleght' => '30',
+					 	'data-parsley-trigger' => 'change focusout',
+					 	'data-parsley-minlength' => '1',
+					]) !!}
 					<br>
 					<span class="text-danger">{{  $errors->first('course_name') }}</span>
 				</div>	
 			</div>		
 		</div>
-		{{-- button --}}
 		<br>
-	{{-- button --}}
+		{{-- button --}}
 		<div class="form-group benphai">
 			<div class="col-md-2">
 				<button class="btn btn-primary button botron" type="submit">{{ trans('course/edit.bt_create') }} <i class="fa fa-check"></i></button>

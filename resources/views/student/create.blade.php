@@ -1,6 +1,6 @@
 @extends('../layouts/teamplade')
 @section('content')
-{!! Form::open(array('url' => 'student', 'method' => 'post', 'files' => true, 'enctype' => 'multipart/form-data')) !!}
+{!! Form::open(array('url' => 'student', 'method' => 'post', 'files' => true, 'enctype' => 'multipart/form-data', 'data-parsley-validate' => '')) !!}
 <div class="form-horizontal">
 	<div class=" container">
 		<div class="breadcrumbs">
@@ -22,7 +22,6 @@
 				<div class="pull-right">
 					<div class="input-group notify">
 						<a class="btn btn-warning button botron" href="{{ route('student.index') }}">
-							{{ trans('student/create.bt_back') }} 
 							<i class="fa fa-arrow-left"></i>
 						</a>	
 					</div>
@@ -38,8 +37,16 @@
 				{!! Form::label('', trans('student/create.st_avatar'), ['class' => 'col-md-4 control-label fontchu']) !!}
 				<div class="col-md-12 {{ $errors->has('avatar') ? 'has-error' : '' }}">
 					<div class="col-md-7 row">
-						{!! Form::file('avatar', array('class' => 'form-control file_name','onchange'=>'ShowPreview(this)')) !!}
-						<span class="text chudo">{{ $errors ->first('avatar') }}</span>
+						{!! Form::file('avatar', array(
+							'class' => 'form-control file_name',
+							'required' => '',
+							'placeholder' => trans('student/create.st_avatar'),
+							'data-parsley-trigger' => 'change focusout',
+							'data-parsley-max-file-size' => '50',
+							'accept' => 'image/png,image/gif,image/jpeg',
+							'onchange'=>'ShowPreview(this)')) 
+						!!}
+						<span class="text-danger">{{ $errors ->first('avatar') }}</span>
 					</div>
 					{{-- image load form --}}
 					<div class="col-md-4 khungimage">
@@ -50,97 +57,175 @@
 			<div class="form-group row">
 				{!! Form::label('', trans('student/create.st_fName'), ['class' => 'col-md-5 control-label fontchu']) !!}
 				<div class="col-md-12 {{ $errors->has('full_name') ? 'has-error' : '' }}">
-					{!! Form::text('full_name', '', ['class' => 'form-control']) !!}
-					<span class="text chudo">{{ $errors ->first('full_name') }}</span>
+					{!! Form::text('full_name',
+					 	null, [
+					 	'class' => 'form-control',
+					 	'required' => '',
+					 	'maxlength' => '50',
+					 	'placeholder' => trans('student/create.st_fName'),
+					 	'data-parsley-maxleght' => '50',
+					 	'data-parsley-trigger' => 'change focusout',
+					 	'data-parsley-minlength' => '1',
+					]) !!}
+					<span class="text-danger">{{ $errors ->first('full_name') }}</span>
 				</div>
 			</div>
 			<div class="form-group row">
 				{!! Form::label('', trans('student/create.st_gender'), ['class' => 'col-md-5 control-label fontchu']) !!}
 				<div class="col-sm-12 {{ $errors->has('gender') ? 'has-error' : '' }} fontchitiet">
 					{!! Form::label('', trans('student/create.st_male'), ['class' =>'control-label']) !!}
-					{!! Form::radio('gender', 1, ['class'=>'form-control','checked'=>'true']) !!}
+					{!! Form::radio('gender', 1, ['class'=>'form-control','checked'=>'true', 'required' => '']) !!}
 					{{--  --}}
 					{!! Form::label('', trans('student/create.st_female'), ['class' =>'control-label']) !!}
-					{!! Form::radio('gender', 0,  ['class'=>'form-control']) !!}
-					<span class="text chudo">{{ $errors ->first('gender') }}</span>
+					{!! Form::radio('gender', 0,  ['class'=>'form-control', 'required' => '']) !!}
+					<span class="text-danger">{{ $errors ->first('gender') }}</span>
 				</div>
 			</div>
 			<div class="form-group row">
 				{!! Form::label('', trans('student/create.st_birthday'), ['class' => 'col-md-5 control-label fontchu']) !!}
 				<div class="col-sm-12 {{ $errors->has('birthday') ? 'has-error' : '' }}">
-					{!! Form::date('birthday', '', ['class' => 'form-control']) !!}
-					<span class="text chudo">{{ $errors ->first('birthday') }}</span>
+					{!! Form::date('birthday',
+					 	null, [
+					 	'class' => 'form-control',
+					 	'required' => '',
+					 	'placeholder' => trans('student/create.st_birthday'),
+					 	'min' => '1900-01-01',
+					 	'data-parsley-trigger' => 'change focusout',
+					 	'max' => '2018-12-31',
+					 ]) !!}
+					<span class="text-danger">{{ $errors ->first('birthday') }}</span>
 				</div>
 			</div>
 			<div class="form-group row">
 				{!! Form::label('', trans('student/create.st_identity'), ['class' => 'col-md-5 control-label fontchu']) !!}
 				<div class="col-sm-12 {{ $errors->has('identity') ? 'has-error' : '' }}">
-					{!! Form::text('identity', '', ['class' => 'form-control']) !!}
-					<span class="text chudo">{{ $errors ->first('identity') }}</span>
+					{!! Form::text('identity',
+					 	null, [
+					 	'class' => 'form-control',
+					 	'required' => '',
+					 	'placeholder' => trans('student/create.st_identity'),
+					 	'pattern' => '\d*',
+					 	'data-parsley-trigger' => 'change focusout',
+					 	'data-parsley-minlength' => '1',
+					 	'maxlength' => '9',
+					 	'data-parsley-maxlength' => '9',
+					 ]) !!}
+					<span class="text-danger">{{ $errors ->first('identity') }}</span>
 				</div>
 			</div>
 			<div class="form-group row">
 				{!! Form::label('', trans('student/create.st_phone'), ['class' => 'col-md-5 control-label fontchu']) !!}
 				<div class="col-sm-12 {{ $errors->has('phone') ? 'has-error' : '' }}">
-					{!! Form::text('phone', '', ['class' => 'form-control'])
-					!!}
-					<span class="text chudo">{{ $errors ->first('phone') }}</span>
+					{!! Form::text('phone',
+					 	null, [
+					 	'class' => 'form-control',
+					 	'required' => '',
+					 	'placeholder' => trans('student/create.st_phone'),
+					 	'pattern' => '\d*',
+					 	'maxlength' => '11',
+					 	'data-parsley-trigger' => 'change focusout',
+					 	'data-parsley-minlength' => '9',
+					 	'data-parsley-maxlength' => '11',
+					 ]) !!}
+					<span class="text-danger">{{ $errors ->first('phone') }}</span>
 				</div>
 			</div>
-
 			<div class="form-group row">
 				{!! Form::label('', trans('student/create.st_email'), ['class' => 'col-md-5 control-label fontchu']) !!}
 				<div class="col-sm-12 {{ $errors->has('email') ? 'has-error' : '' }}">
-					<div class="input-group">
-						{!! Form::text('email', '', ['class' => 'form-control','aria-describedby'=>'basic-addon2'])
-						!!}
-						<span class="input-group-addon" id="basic-addon2">@gmail.com</span>
-					</div>
-					<span class="text chudo">{{ $errors ->first('email') }}</span>
+					{!! Form::email('email', null, [
+           				'class' => 'form-control',
+           				'aria-describedby' => 'basic-addon2',
+            			'placeholder' => trans('student/create.st_email'),
+            			'required' => '',
+            			'maxlength' => '50',
+            			'data-parsley-minlength' => '1',
+					 	'data-parsley-maxlength' => '50',
+            			'data-parsley-trigger' => 'change focusout',
+        			]) !!}
+					<span class="input-group-addon benphai" id="basic-addon2">@gmail.com</span>
+					<span class="text-danger">{{ $errors ->first('email') }}</span>
 				</div>
 			</div>
 			<div class="form-group row">
 				{!! Form::label('', trans('student/create.st_homeTown'), ['class' => 'col-md-5 control-label fontchu']) !!}
 				<div class="col-sm-12 {{ $errors->has('home_town') ? 'has-error' : '' }}">
-					{!! Form::text('home_town', '', ['class' => 'form-control'])
-					!!}
-					<span class="text chudo">{{ $errors ->first('home_town') }}</span>
+					{!! Form::text('home_town',
+					 	null, [
+					 	'class' => 'form-control',
+					 	'required' => '',
+					 	'placeholder' => trans('student/create.st_homeTown'),
+					 	'data-parsley-maxlength' => '30',
+					 	'maxlength' => '30',
+					 	'data-parsley-trigger' => 'change focusout',
+					 	'data-parsley-minlength' => '1',
+					]) !!}
+					<span class="text-danger">{{ $errors ->first('home_town') }}</span>
 				</div>
 			</div>
 			<div class="form-group row">
 				{!! Form::label('', trans('student/create.st_nation'), ['class' => 'col-md-5 control-label fontchu']) !!}
 				<div class="col-sm-12 {{ $errors->has('nation') ? 'has-error' : '' }}">
-					{!! Form::text('nation', '', ['class' => 'form-control'])
-					!!}
-					<span class="text chudo">{{ $errors ->first('nation') }}</span>
+					{!! Form::text('nation',
+					 	null, [
+					 	'class' => 'form-control',
+					 	'required' => '',
+					 	'maxlength' => '30',
+					 	'placeholder' => trans('student/create.st_nation'),
+					 	'data-parsley-trigger' => 'change focusout',
+					 	'data-parsley-maxlength' => '30',
+					 	'data-parsley-minlength' => '1',
+					]) !!}
+					<span class="text-danger">{{ $errors ->first('nation') }}</span>
 				</div>
 			</div>
 			<div class="form-group row">
 				{!! Form::label('', trans('student/create.st_religion'), ['class' => 'col-md-5 control-label fontchu']) !!}
 				<div class="col-sm-12 {{ $errors->has('religion') ? 'has-error' : '' }}">
-					{!! Form::text('religion', '', ['class' => 'form-control'])
-					!!}
-					<span class="text chudo">{{ $errors ->first('religion') }}</span>
+					{!! Form::text('religion',
+					 	null, [
+					 	'class' => 'form-control',
+					 	'required' => '',
+					 	'maxlength' => '30',
+					 	'placeholder' => trans('student/create.st_religion'),
+					 	'data-parsley-trigger' => 'change focusout',
+					 	'data-parsley-maxlength' => '30',
+					 	'data-parsley-minlength' => '1',
+					]) !!}
+					<span class="text-danger">{{ $errors ->first('religion') }}</span>
 				</div>
 			</div>
 			{{-- khoa --}}
 			<div class="form-group row">
 				{!! Form::label('', trans('student/create.st_department'), ['class' => 'col-md-5 control-label fontchu']) !!}
 				<div class="col-sm-12 {{ $errors->has('deparment') ? 'has-error' : '' }}">
-					{!! Form::select('deparment', [ '' => trans('student/create.st_select') ] + $deparments, null, 
-						['class' => 'form-control', 'id' => 'department']) 
-						!!}
-						<span class="text chudo">{{ $errors ->first('deparment') }}</span>
+					{!! Form::select('deparment', [ 
+						'' => trans('student/create.st_select') ] + $deparments,
+					 	null, [
+					 	'class' => 'form-control',
+					 	'required' => '',
+					 	'id' => 'department',
+					 	'data-parsley-trigger' => 'change focusout',
+					]) !!}
+					<span class="text-danger">{{ $errors ->first('deparment') }}</span>
 					</div>
 				</div>
 				{{-- lớp --}}
 				<div class="form-group row">
 					{!! Form::label('', trans('student/create.st_course'), ['class' => 'col-md-5 control-label fontchu']) !!}
 					<div class="col-sm-12 {{ $errors->has('deparment') ? 'has-error' : '' }}">
-						<select class="form-control" name="course_name">
-							<option value="">{{ trans('student/create.st_select') }}</option>
-						</select>
-						<span class="text chudo">{{ $errors ->first('course_name') }}</span>
+						{!! Form::select('course_name', [ 
+							'' => trans('student/create.st_select') ], 
+							null, [
+							'class' => 'form-control',
+							'required' => '',
+							'data-parsley-trigger' => 'change focusout',
+							'id' => 'course',
+						]) !!}
+						<span class="text-danger">{{ $errors ->first('course_name') }}</span>
+						<div class="chuxanh">
+							{{ trans('student/create.warning') }}
+						</div>
 					</div>
 				</div>
 			</div>
