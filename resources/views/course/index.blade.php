@@ -1,4 +1,5 @@
 @extends('../layouts/teamplade')
+
 @section('css')
 @endsection
 
@@ -13,6 +14,5 @@
 @endsection
 
 @section('js')
-<script src="{{ asset('js/ajaxcrud.js') }}"></script>
 @endsection
 

@@ -24,9 +24,9 @@ class CourseController extends Controller
                 ->has('search') ? $request->session()->get('search') : ''));
         $course_all = Course::where('course_name', 'like', '%' . $request->session()->get('search') . '%')->paginate(4);
         if ($request->ajax()) {
-            return view('course/ajax', compact('course_all'));
+            return view('course.ajax', compact('course_all'));
         } else {
-            return view('course/index', compact('course_all'));
+            return view('course.index', compact('course_all'));
         }
     }
 
@@ -39,7 +39,7 @@ class CourseController extends Controller
     {
         $department_all = Department::paginate(4);
 
-        return view('course\create', compact('department_all'));
+        return view('course.create', compact('department_all'));
     }
 
     /**
@@ -57,7 +57,11 @@ class CourseController extends Controller
             $course_data->department_id = $request['department_id'];
             $department_data->courses()->save($course_data);
         }
-        Session::flash('ketqua', 'Tạo lớp thành công'. ' '. $request['course_name']);
+        if (config('app.locale') == 'vi') {
+            Session::flash('ketqua', 'Tạo lớp thành công' . ' ' . $request['course_name']);
+        } else {
+            Session::flash('ketqua', 'Created course' . ' ' . $request['course_name']);
+        }
 
         return redirect()->route('course.show', $course_data->id);
     }
@@ -70,12 +74,11 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        $lop_show = Course::findOrFail($id);
-        $count = $lop_show->students()->where('course_id', $id)->count();
-        $students = $lop_show->students()->where('course_id', $id)->get();       
-        $tenkhoa = Course::with('department')->findOrFail($lop_show);
+        $course_show = Course::findOrFail($id);
+        $count = $course_show->students()->where('course_id', $id)->count();
+        $students = $course_show->students()->where('course_id', $id)->get();       
 
-        return view('course.show', compact('lop_show', 'tenkhoa', 'students', 'count'));
+        return view('course.show', compact('course_show', 'students', 'count'));
     }
 
     /**
@@ -104,7 +107,11 @@ class CourseController extends Controller
         $request = $request->all();// lấy hết giá trị từ view
         $data->course_name = $request['course_name'];
         $data->save();
-        Session::flash('ketqua', 'Cập nhật thành công thông tin lớp!');
+        if (config('app.locale') == 'vi') {
+            Session::flash('ketqua', 'Cập nhật thành công thông tin lớp!');
+        } else {
+            Session::flash('ketqua', 'Updated course!');
+        }
 
         return redirect()->route('course.show',$id);
     }
@@ -119,8 +126,12 @@ class CourseController extends Controller
     {
         $data = Course::findOrFail($id);
         $data->delete();
-        Session::flash('ketqua', 'Đã xóa Lớp'.' '.$data->Course_name);
-
+        if (config('app.locale') == 'vi') {
+            Session::flash('ketqua', 'Đã xóa Lớp' . ' ' . $data->Course_name);
+        } else {
+            Session::flash('ketqua', 'Deleted course' . ' ' . $data->Course_name);
+        }
+        
         return redirect()->route('course.index');
     }
 }

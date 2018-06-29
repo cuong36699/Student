@@ -54,9 +54,9 @@ class DepartmentController extends Controller
         $data = $request->all();
         $department_id= Department::create($data);
         if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Tạo mới khoa thành công'. ' '. $data['department_name']);
-        }else{
-            Session::flash('ketqua', 'Created department'. ' '. $data['department_name']);
+            Session::flash('ketqua', 'Tạo mới khoa thành công' . ' ' . $data['department_name']);
+        } else {
+            Session::flash('ketqua', 'Created department' . ' ' . $data['department_name']);
         }
         
 
@@ -72,9 +72,9 @@ class DepartmentController extends Controller
     public function show($id)
     {
         $department_show = Department::findOrFail($id);
-        $cdp = $department_show->courses()->paginate(4);
+        $paging_course = $department_show->courses()->paginate(5);
         
-        return view('department/show', compact('department_show', 'cdp'));
+        return view('department/show', compact('department_show', 'paging_course'));
     }
 
     /**
@@ -124,12 +124,11 @@ class DepartmentController extends Controller
         $data = Department::findOrFail($id);
         $data->delete();
         if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Đã xóa Khoa'. ' '. $data->department_name);
+            Session::flash('ketqua', 'Đã xóa Khoa' . ' ' . $data->department_name);
         }else{
-            Session::flash('ketqua', 'Deleted department'. ' '. $data->department_name);
+            Session::flash('ketqua', 'Deleted department' . ' ' . $data->department_name);
         }
         
-
         return redirect()->route('department.index');
     }
 }

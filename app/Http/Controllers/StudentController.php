@@ -13,10 +13,17 @@ use App\Models\Student;
 use App\Models\Course;
 use App\Models\Department;
 use App\Models\Risident;
+use App\Models\Member;
 use Session;
+use Mail;
 
 class StudentController extends Controller
 {
+    public function __construct()
+    {
+        return view('student.index');
+    }
+    
     public function changeLanguage($language)
     {   
         Session::put('website_language', $language);
@@ -79,6 +86,7 @@ class StudentController extends Controller
      */
     public function store(StoreBlogStudent $request)
     {
+        // dd($request);
         // nhận tên thời gian image và di chuyển hình vào thư mục hình ảnh
         $image = time() . '.' . $request['avatar']->getClientOriginalName();
         request()->avatar->move(public_path('hinhanh'), $image);
@@ -98,6 +106,10 @@ class StudentController extends Controller
         $course_id = $request->input('course_name');
         $new_student->courses()->attach($course_id);
         //
+        Mail::send('mail.mail', $data, function($message) use ($data){
+            $message->to($data['email']);
+            $message->subject($data['student_id']);
+        });
         if (config('app.locale') == 'vi') {
             Session::flash('ketqua', 'Đã tạo thành công thông tin sinh viên' . ' ' . $data['full_name']);
         }else{

@@ -21,7 +21,7 @@
 			</div>
 		</div>
 	</div>
-	{!! Form::model($vipham_edit, array('route' => array('violation.update', $vipham_edit->id), 'method' => 'put')) !!}
+	{!! Form::model($violation_edit, array('route' => array('violation.update', $violation_edit->id), 'method' => 'put', 'data-parsley-validate' => '')) !!}
 	<div class="container col-md-12">
 		<div class="khung">
 			<br>
@@ -30,28 +30,54 @@
 			<div class="form-group row center">
 				{!! Form::label('', trans('violation/edit.bt_date'), ['class' => 'col-md-3 control-label fontchu']) !!}
 				<div class="col-md-9 {{ $errors->has('date_violation') ? 'has-error' : '' }}">
-					{!! Form::date('date_violation',$vipham_edit->date_violation , ['class' => 'form-control demkytu','maxlength'=>'150']) !!}
-					<span class="text chudo">{{ $errors ->first('date_violation') }}</span>
+					{!! Form::date('date_violation', 
+							$violation_edit->date_violation, [
+							'class' => 'form-control',
+							'required' => '',
+					 		'placeholder' => trans('violation/edit.bt_date'),
+					 		'min' => '1900-01-01',
+					 		'data-parsley-trigger' => 'change focusout',
+					 		'max' => '2018-12-31',
+					]) !!}
+					<span class="text-danger">{{ $errors ->first('date_violation') }}</span>
 				</div>
 			</div>
 			<div class="form-group row center">
 				{!! Form::label('', trans('violation/edit.bt_vform'), ['class' => 'col-md-3 control-label fontchu']) !!}
 				<div class="col-md-9 {{ $errors->has('form_of_violation') ? 'has-error' : '' }}">
-					{!! Form::textarea('form_of_violation', $vipham_edit->form_of_violation, ['class' => 'form-control ckeditor', 'placeholder' => 'Please input Content', 'rows' => '4']) !!}
-					<span class="text chudo">{{ $errors ->first('form_of_violation') }}</span>
+					{!! Form::textarea('form_of_violation',
+							$violation_edit->form_of_violation, [
+							'class' => 'form-control ckeditor',
+							'maxlength' => '2500',
+							'required' => '',
+							'data-parsley-maxleght' => '2500',
+					 		'data-parsley-trigger' => 'change focusout',
+					 		'data-parsley-minlength' => '1',
+							'placeholder' => 'Please input Content',
+							'rows' => '4'
+						]) !!}
+					<span class="text-danger">{{ $errors ->first('form_of_violation') }}</span>
 				</div>
 			</div>			
 			<div class="form-group row center">
 				{!! Form::label('', trans('violation/edit.bt_discipline'), ['class' => 'col-md-3 control-label fontchu']) !!}
 				<div class="col-md-9 {{ $errors->has('discipline') ? 'has-error' : '' }}">
 					{!! Form::select('discipline', [
-						$vipham_edit->discipline=>$vipham_edit->discipline,
-						'Khiển trách'=>'Khiển trách',
-						'Kỷ luật'=>'Kỷ luật',
-						'Đuổi học'=>'Đuổi học',
-						'Phạt hành chính'=>'Phạt hành chính',
-						],'',['class' => 'form-control']) !!}
-						<span class="text chudo">{{ $errors ->first('discipline') }}</span>
+							$violation_edit->discipline=>$violation_edit->discipline,
+							'Khiển trách'=>'Khiển trách',
+							'Kỷ luật'=>'Kỷ luật',
+							'Đuổi học'=>'Đuổi học',
+							'Phạt hành chính'=>'Phạt hành chính',
+							],
+							null,[
+							'class' => 'form-control',
+							'required' => '',
+							'maxlength' => '50',
+							'data-parsley-maxleght' => '50',
+							'data-parsley-minlength' => '1',
+							'data-parsley-trigger' => 'change focusout',
+					]) !!}
+					<span class="text-danger">{{ $errors ->first('discipline') }}</span>
 					</div>			
 				</div>
 			</div>	

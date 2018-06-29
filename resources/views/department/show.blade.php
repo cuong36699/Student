@@ -1,7 +1,5 @@
 @extends('../layouts/teamplade')
-
 @section('content')	
-{{-- expr --}}
 <div class="form-horizontal">
 	<div class="container">
 		<div class="breadcrumbs">
@@ -64,40 +62,50 @@
 						<br>
 						<div>
 							<h3 class="h3info">
-								{!! Form::label('', trans('department/show.st_all'). ' '. $department_show->department_name. ' '. trans('department/show.st_year'). ' '. '('.$department_show->graduation_year.')', ['class'=>'control-label fontchu']) 
-								!!}
+								{!! Form::label('', trans('department/show.st_all') . ' ' . $department_show->department_name, ['class'=>'control-label fontchu']) !!}
+								<p>{{ trans('department/show.st_year') }} {{ $department_show->graduation_year }}</p>
 							</h3>
 						</div>
 						<hr>
 						<div class="col-md-12">
-							@foreach ($cdp as $courses)
+							@foreach ($paging_course as $courses)
 							<div class="col-md-12">
 								<strong>
 									{{-- lay thoi gian tao tru cho thoi` gian hien tai --}}
 									{{ trans('department/show.st_createon') }} {!!$courses->created_at->diffForHumans()!!}:
 								</strong> 
-								<a class="fontchitiet chuxanh" href="{{ route('course.show',$courses->id) }}">[{!! $courses->course_name !!}]</a>
+								<a class="fontchitiet chuxanh" href="{{ route('course.show',$courses->id) }}">
+									[{!! $courses->course_name !!}]
+								</a>
 							</div>
 							@endforeach
-							{!! $cdp->links() !!}
+							<div class="form-group center">
+								{!! $paging_course->links() !!}
+							</div>
 						</div>
-
 					</div>	
 				</div>
 			</div>
 			<br>
 			<h3 class="h3info">{{ trans('department/show.st_infoCourse') }}</h3>
-			<hr>
-			{!! Form::open(['route'=>'course.store',$department_show->id]) !!}
-			{!!csrf_field()!!}
+			<hr>		
+			{!! Form::open(['url' => 'course', 'method' => 'post', 'data-parsley-validate' => '']) !!}
 			{!! Form::hidden( 'department_id', $department_show->id, []) !!}
 			<div class="form-group row">
 				{!! Form::label('', trans('department/show.st_course'), ['class'=>'col-md-2 control-label fontchu']) !!}
 				<div class="col-sm-10 {{$errors->has('course_name') ? 'has-error' : '' }}" role="alert">
-					{!! Form::text('course_name','', ['class'=>'form-control']) !!}
+					{!! Form::text('course_name',
+					 	null, [
+					 	'class' => 'form-control',
+					 	'required' => '',
+					 	'maxlength' => '30',
+					 	'placeholder' => trans('department/show.st_course'),
+					 	'data-parsley-maxleght' => '30',
+					 	'data-parsley-trigger' => 'change focusout',
+					 	'data-parsley-minlength' => '1',
+					]) !!}
 					<br>
 					<span class="" class="text-danger">{{  $errors->first('course_name') }}</span>
-					{{-- button --}}
 					{{-- button --}}
 					<div class="form-group benphai">
 						<div class="col-md-2">
@@ -113,7 +121,6 @@
 			</div>
 		</div>
 	</div>
-	<br>
 </div>
 @endsection
 {!! Form::close() !!}

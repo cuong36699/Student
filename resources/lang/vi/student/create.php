@@ -52,5 +52,6 @@ return [
     'st_city' => 'Tỉnh/Thành Phố:',
     'st_pcode' => 'Mã vùng:',
     'st_hphone' => 'Điện thoại nhà:',
-
+    // 
+    'warning' => '*Chú ý: Bạn phải chọn khoa để có dữ liệu lớp',
 ];

@@ -25,23 +25,23 @@ class StoreBlogStudent extends FormRequest
     {
         return [
             'avatar' => 'file|required|image|mimes:jpeg,png,jpg,gif,svg|max:2048|',
-            'full_name' => 'required|max:100|min:10',
-            'gender' => 'required',
-            'birthday' => 'required|max:100|date',
-            'phone' => 'required|numeric|max:99999999999|min:999999999',
-            'email' => 'required|max:100|email|min:2',
-            'home_town' => 'required|max:100|min:1',
-            'nation' => 'required|max:100|min:1',
-            'religion' => 'required|max:100|min:1',
-            'identity' => 'required|numeric|max:999999999|min:99999999',
-            'deparment' => 'required',
-            'course_name' => 'required',
-            // 
-            'address' => 'required|max:100|min:1',
-            'street' => 'required|max:100|min:1',
-            'city' => 'required|max:100|min:1',
-            'postal_code' => 'required|numeric|max:99|min:1',
-            'home_phone' => 'required|numeric|max:99999999999|min:999999999',
+            // 'full_name' => 'required|max:100|min:1',
+            // 'gender' => 'required',
+            // 'birthday' => 'required|max:100|date',
+            // 'phone' => 'required|numeric',
+            // 'email' => 'required|max:100|email|min:2|unique:students',
+            // 'home_town' => 'required|max:100|min:1',
+            // 'nation' => 'required|max:100|min:1',
+            // 'religion' => 'required|max:100|min:1',
+            // 'identity' => 'required|numeric',
+            // 'deparment' => 'required',
+            // 'course_name' => 'required',
+            // // 
+            // 'address' => 'required|max:100|min:1',
+            // 'street' => 'required|max:100|min:1',
+            // 'city' => 'required|max:100|min:1',
+            // 'postal_code' => 'required|numeric',
+            // 'home_phone' => 'required|numeric',
         ];
     }
 
@@ -66,14 +66,13 @@ class StoreBlogStudent extends FormRequest
                 'birthday.date' => 'vui lòng nhập lại ngày tháng năm cho chuẩn',
                 // dien thoai
                 'phone.required' => 'vui lòng nhập số điện thoại',
-                'phone.max' => 'Số điện thoại không vượt quá 11 số',
                 'phone.numeric' => 'Số điện thoại phải là số',
-                'phone.min' => 'Số điện thoại ít nhất 10 số',
                 // email
                 'email.required' => 'Vui lòng nhập email',
                 'email.min' => 'Email không được dưới 2 ký tự',
                 'email.max' => 'Email không được vượt quá 100 ký tự',
                 'email.email' => 'Phải là email',
+                'unique' => 'email đã tồn tại',
                 // nơi sinh
                 'home_town.required' => 'Vui lòng nhập nơi sinh',
                 'home_town.min' => 'Nơi sinh không được dưới 1 ký tự',
@@ -92,9 +91,7 @@ class StoreBlogStudent extends FormRequest
                 'course_name.required' => 'Vui lòng chọn lớp',
                 // cmnd
                 'identity.required' => 'vui lòng nhập số chứng minh thư',
-                'identity.max' => 'số chứng minh thư không vượt quá 9 số',
                 'identity.numeric' => 'số chứng minh thư phải là số',
-                'identity.min' => 'số chứng minh thư ít nhất 9 số', 
                 // địa chỉ
                 'address.required' => 'Vui lòng nhập Địa chỉ',
                 'address.min' => 'Địa chỉ không được dưới 1 ký tự',
@@ -109,9 +106,7 @@ class StoreBlogStudent extends FormRequest
                 'city.max' => 'Tỉnh hoặc Thành phố không được quá 100 ký tự',
                 // ma~ vung
                 'postal_code.required' => 'vui lòng nhập Số mã vùng',
-                'postal_code.max' => 'Số mã vùng không vượt quá 11 số',
                 'postal_code.numeric' => 'Số mã vùng phải là số',
-                'postal_code.min' => 'Số mã vùng ít nhất 10 số',
                 // ma~ vung
                 'home_phone.required' => 'vui lòng nhập Số điện thoại',
                 'home_phone.max' => 'Số điện thoại không vượt quá 11 số',

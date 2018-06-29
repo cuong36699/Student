@@ -57,9 +57,6 @@
 					{{ trans('student/index.st_gender') }} 
 				</th>
 				<th>
-					{{ trans('student/index.st_homet') }} 
-				</th>
-				<th>
 					{{ trans('student/index.st_action') }} 
 				</th>
 				<th>
@@ -100,8 +97,7 @@
 					@else
 						{{ trans('student/index.st_female') }} 
 					@endif 
-				</td>
-				<td>{!! $svs->home_town !!}</td>		
+				</td>	
 				{{-- xem  --}}
 				<td>
 					<div class="dropdown">

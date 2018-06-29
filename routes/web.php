@@ -29,3 +29,8 @@ Route::group(['middleware' => 'locale'], function() {
 // 
 	Route::post('/showCourseInDepartment', 'StudentController@showCourseInDepartment');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('admin', 'AdminController@index');
