@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Notifications\AdminResetPasswordNotification;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
-    // use Notifiable;
+    use Notifiable;
+    
+    protected $guard = 'admin';
 
     /**
      * The attributes that are mass assignable.
@@ -15,10 +18,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 
-        'email', 
+        'name',
+        'email',
         'password',
-        'student_id',
+        'job_title',
     ];
 
     /**
@@ -27,12 +30,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 
+        'password',
         'remember_token',
     ];
 
-    public function student()
+    public function sendPasswordResetNotification($token)
     {
-        return $this->belongsTo(Student::class);
+        $this->notify(new AdminResetPasswordNotification($token));
     }
 }

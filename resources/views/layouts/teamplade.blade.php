@@ -8,7 +8,7 @@
     {{-- Title --}}
     <title>@yield('title', trans('layout/text.st_student') )</title>
     {{-- js cs template --}}
-    <link rel="stylesheet" href="{{ asset('css/cssTeamplade/assets/css/lib/vector-map/jqvmap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cssTeamplade/assets/css/lib/vector-map/jqvmap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/cssTeamplade/assets/css/normalize.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/cssTeamplade/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/cssTeamplade/assets/css/font-awesome.min.css') }}">
@@ -38,7 +38,7 @@
                     <i class="fa fa-bars"></i>
                 </button>
                 {{-- lo go 1 --}}
-                <a class="navbar-brand" href="{{ url('student') }}">
+                <a class="navbar-brand" href="{{ route('student.index') }} ">
                     {{ trans('layout/text.st_op') }}
                 </a>
                 {{-- lo go 2  --}}
@@ -80,15 +80,15 @@
                         <ul class="sub-menu children dropdown-menu">
                             <li>
                                 <i class="fa fa-id-badge"></i>
-                                <a href="{{ url('student/create') }}">{{ trans('layout/text.st_workS') }}</a>
+                                <a href="{{ route('student.create') }}">{{ trans('layout/text.st_workS') }}</a>
                             </li>
                             <li>
                                 <i class="fa fa-id-badge"></i>
-                                <a href="{{ asset('department/create') }}">{{ trans('layout/text.st_workDp') }}</a>
+                                <a href="{{ route('department.create') }}">{{ trans('layout/text.st_workDp') }}</a>
                             </li>
                             <li>
                                 <i class="fa fa-id-badge"></i>
-                                <a href="{{ asset('course/create') }}">{{ trans('layout/text.st_workC') }}</a>
+                                <a href="{{ route('course.create') }}">{{ trans('layout/text.st_workC') }}</a>
                             </li> 
                         </ul>
                     </li>
@@ -113,8 +113,9 @@
                 <div class="col-sm-5">
                     <div class="user-area dropdown float-right">
                         {{-- admin --}}
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="{{ asset('images/admin.jpg') }}" alt="User Avatar">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                            {{ Auth::user()->name }} <span class="caret"></span>
+                             <img class="user-avatar rounded-circle" src="{{ asset('images/admin.jpg') }}" alt="User Avatar">
                             <i class="fa fa-angle-double-down"></i>
                         </a>
                         {{-- drow admin --}}
@@ -122,7 +123,13 @@
                             <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
                             <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications<span class="count">13</span></a>
                             <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>
-                            <a class="nav-link" href="#"><i class="fa fa-power -off"></i>Logout</a>
+                            <a class="nav-link" href="{{ route('admin.logout') }}" onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
                         </div>
                     </div>
                     {{-- Language --}}
@@ -206,7 +213,7 @@
     {{-- thu vien ajax select --}}
     <script src="{{ asset('js/backend/jquerySelectAjax.min.js') }}"></script>
     {{-- select ajax --}}
-    <script src="{{ asset('js/backend/selectajaxs.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/backend/selectajax.js') }}" type="text/javascript"></script>
     {{-- js them --}}
     <script src="{{ asset('js/backend/memberappends.js') }}"></script>
     <script src="{{ asset('js/backend/jquery.js') }}"></script>
