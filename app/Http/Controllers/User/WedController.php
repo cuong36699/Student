@@ -15,7 +15,7 @@ class WedController extends Controller
     public function changeLanguage($language)
     {   
         Session::put('website_language', $language);
-        Session::flash('ketqua', 'ádasdasd');
+        Session::flash('ketqua', trans('layout/wed.st_flash'));
 
         return redirect()->back();
     }

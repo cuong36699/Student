@@ -1,7 +1,22 @@
 
 @extends('layouts.app')
-
 @section('content')
+{{-- thông báo thành công --}}
+@if (session('ketqua'))
+<div class="alert alert-success" role="alert">
+    <span >
+        Thông báo
+    </span>
+    <P class="text-danger">{!! session('ketqua') !!}</P>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">
+        </span>
+    </button>
+    @foreach ($errors->all() as $err)
+    {!! $err !!}
+    @endforeach
+</div>
+@endif
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">

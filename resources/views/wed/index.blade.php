@@ -1,6 +1,6 @@
 @extends('../layouts/wed')
 @section('content')
-<div style="color :green" class="col-md-12">
+<div class="col-md-12 chuxanhla">
     <div class="size"></div>
     <div class="form-group">
         <p>
@@ -14,7 +14,7 @@
         <p>
         LỊCH THI HỌC KỲ 2 NĂM HỌC 2017-2018
         HỌC PHẦN GE1: CÁC LỚP GE1069, 1070, 1072, 7073
-        <button style="float: right;" class="btn btn-default">Xem chi tiết..</button>
+        <button class="btn btn-default benphai">Xem chi tiết..</button>
         </p>
     </div>
     <hr>
@@ -29,10 +29,11 @@
         </div> 
         <p>
         DANH SÁCH THI LẠI TỐT NGHIỆP KỸ THUẬT VIÊN TIN HỌC - ĐỢT THÁNG 6/2018
-        <button style="float: right;" class="btn btn-default">Xem chi tiết..</button>
+        <button class="btn btn-default benphai">Xem chi tiết..</button>
         </p>
     </div>
-    <hr>    <div class="form-group">
+    <hr>    
+    <div class="form-group">
         <p>
             <img class="w3-spin" src="{{ asset('hinhanh/onlyhoa.png') }}"  width="30" height="30">
             THÔNG TIN THÔNG BÁO
@@ -43,10 +44,11 @@
         </div> 
         <p>
         HỌC PHẦN: TIẾNG NHẬT 2
-        <button style="float: right;" class="btn btn-default">Xem chi tiết..</button>
+        <button class="btn btn-default benphai">Xem chi tiết..</button>
         </p>
     </div>
-    <hr>    <div class="form-group">
+    <hr>    
+    <div class="form-group">
         <p>
             <img class="w3-spin" src="{{ asset('hinhanh/onlyhoa.png') }}"  width="30" height="30">
             THÔNG TIN THÔNG BÁO
@@ -57,10 +59,11 @@
         </div> 
         <p>
         ÁP DỤNG CHO SV ĐĂNG KÝ THI LẠI THÁNG 6/2018
-        <button style="float: right;" class="btn btn-default">Xem chi tiết..</button>
+        <button class="btn btn-default benphai">Xem chi tiết..</button>
         </p>
     </div>
-    <hr>    <div class="form-group">
+    <hr>    
+    <div class="form-group">
         <p>
             <img class="w3-spin" src="{{ asset('hinhanh/onlyhoa.png') }}"  width="30" height="30">
             THÔNG TIN THÔNG BÁO
@@ -71,10 +74,11 @@
         </div> 
         <p>
         KỲ THI ĐÁNH GIÁ NĂNG LỰC TIẾNG ANH (THEO ĐỊNH HƯỚNG TOEIC) _ ĐỢT 1-2018
-        <button style="float: right;" class="btn btn-default">Xem chi tiết..</button>
+        <button class="btn btn-default benphai">Xem chi tiết..</button>
         </p>
     </div>
-    <hr>    <div class="form-group">
+    <hr>    
+    <div class="form-group">
         <p>
             <img class="w3-spin" src="{{ asset('hinhanh/onlyhoa.png') }}"  width="30" height="30">
             THÔNG TIN THÔNG BÁO
@@ -85,7 +89,7 @@
         </div> 
         <p>
         LỊCH THAY ĐỔI CÁC LỚP: QK15B1.1,D1.1, CD15B1.1, QV15B1.1, XD15B1.1, KT15B1.1, D1.1, QS15B1.1
-        <button style="float: right;" class="btn btn-default">Xem chi tiết..</button>
+        <button class="btn btn-default benphai">Xem chi tiết..</button>
         </p>
     </div>
     <hr>

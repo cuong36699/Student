@@ -1,123 +1,124 @@
 @extends('../layouts/wed')
 @section('content')
 <div class="content col-md-12">
-  <img src="{{ asset('hinhanh/'.$student->avatar) }}"  width="42" height="42"> 
-       <c class="h1info">HỒ SƠ SINH VIÊN:</c> 
-       <hr>
-    <div class="form-group col-md-4">
-       
+    <img src="{{ asset('hinhanh/'.$student->avatar) }}"  width="42" height="42"> 
+    <c class="h1info">{{ trans('wed/show.st_infovio') }}</c> 
+    <hr>
+    <div class="form-group col-md-4">   
        <div class="khung">
-           <div style="text-align: center;" class="form-group">
-            <br>
-            <img src="{{ asset('hinhanh/'.$student->avatar) }}" class="img-circle"  width="150" height="150">
+            <div class="form-group center">
+                <br>
+                <img src="{{ asset('hinhanh/'.$student->avatar) }}" class="img-circle"  width="150" height="150">
             </div>
-            <div style="text-align: center;" class="form-group row">
+            <div class="form-group row center">
                 <div class="col-md-12">
-                    {!! Form::label('', 'IDSV:', ['class'=>'control-labe fontchu']) !!}
+                    {!! Form::label('', trans('wed/show.st_ids'), ['class'=>'control-labe fontchu']) !!}
                     {!! Form::label('', $student->id, ['class'=>'fontchitiet']) !!}
                 </div>
                 <div class="col-md-12">
-                    {!! Form::label('', 'Họ và Tên:', []) !!}
+                    {!! Form::label('', trans('wed/show.st_fn'), []) !!}
                     {!! Form::label('', $student->full_name, ['class'=>'fontchitiet']) !!}
                 </div>
                 <div class="col-md-12">
-                    {!! Form::label('', 'Giới tính:', []) !!}
-                        @if ($student->gender == 1)
-                            {!! Form::label('', 'Nam', ['class'=>'fontchitiet']) !!}
-                        @else 
-                            {!! Form::label('', 'Nữ', ['class'=>'fontchitiet']) !!}
-                        @endif
+                    {!! Form::label('', trans('wed/show.st_gd'), []) !!}
+                    @if ($student->gender == 1)
+                        {!! Form::label('', trans('wed/show.st_male'), ['class'=>'fontchitiet']) !!}
+                    @else 
+                        {!! Form::label('', trans('wed/show.st_female'), ['class'=>'fontchitiet']) !!}
+                    @endif
                 </div>
                 <div class="col-md-12">
-                    {!! Form::label('', 'Ngày sinh:', []) !!}
+                    {!! Form::label('', trans('wed/show.st_bd'), []) !!}
                     {!! Form::label('', $student->birthday, ['class'=>'fontchitiet']) !!}
                 </div>
                 <div class="col-md-12">
-                    {!! Form::label('', 'Nơi sinh:', []) !!}
+                    {!! Form::label('', trans('wed/show.st_ht'), []) !!}
                     {!! Form::label('', $student->home_town, ['class'=>'fontchitiet']) !!}
                 </div>
                 <div class="col-md-12">
-                    {!! Form::label('', 'Dân tộc:', []) !!}
+                    {!! Form::label('', trans('wed/show.st_na'), []) !!}
                     {!! Form::label('', $student->nation, ['class'=>'fontchitiet']) !!}
                 </div>
                 <div class="col-md-12">
-                    {!! Form::label('', 'Tôn giáo:', []) !!}
+                    {!! Form::label('', trans('wed/show.st_re'), []) !!}
                     {!! Form::label('', $student->religion, ['class'=>'fontchitiet']) !!}
                 </div>
             </div> 
-       </div>     
+        </div>     
     </div>
-    <div style="text-align: center;" class="form-group col-md-6">
+    <div class="form-group col-md-6 center">
         <div class="col-md-12">
-            <h3 class="h3info">Thông tin riêng:</h3>
+            <h3 class="h3info">{{ trans('wed/show.nt_infos') }}</h3>
             <hr>
         </div>
         <div class="col-md-12">
-            {!! Form::label('', 'Bậc:', []) !!}
+            {!! Form::label('', trans('wed/show.st_dg'), []) !!}
             {!! Form::label('', $course->department->degree, ['class'=>'fontchitiet']) !!}
         </div>
         <div class="col-md-12">
-            {!! Form::label('', 'Năm học:', []) !!}
+            {!! Form::label('', trans('wed/show.st_gy'), []) !!}
             {!! Form::label('', $course->department->graduation_year, ['class'=>'fontchitiet']) !!}
         </div>
         <div class="col-md-12">
-            {!! Form::label('', 'Ngành học:', []) !!}
+            {!! Form::label('', trans('wed/show.st_dp'), []) !!}
             {!! Form::label('', $course->department->department_name, ['class'=>'fontchitiet']) !!}
         </div>
         <div class="col-md-12">
-            {!! Form::label('', 'Tên lớp:', []) !!}
+            {!! Form::label('', trans('wed/show.st_c'), []) !!}
             {!! Form::label('', $course->course_name, ['class'=>'fontchitiet']) !!}
         </div>
         <div class="col-md-12">
-            {!! Form::label('', 'Số Chứng minh:', []) !!}
+            {!! Form::label('', trans('wed/show.st_iden'), []) !!}
             {!! Form::label('', $student->identity, ['class'=>'fontchitiet']) !!}
         </div>
         <div class="col-md-12">
-            {!! Form::label('', 'Điện thoại:', []) !!}
+            {!! Form::label('', trans('wed/show.st_phone'), []) !!}
             {!! Form::label('', $student->phone, ['class'=>'fontchitiet']) !!}
         </div>
         <div class="col-md-12">
-            {!! Form::label('', 'Email:', []) !!}
+            {!! Form::label('', trans('wed/show.st_email'), []) !!}
             {!! Form::label('', $student->email, ['class'=>'fontchitiet']) !!}
         </div>
         <div class="col-md-12">
-            {!! Form::label('', 'Địa chỉ thường trú:', []) !!}
-            {!! Form::label('', $student->risident->address . ' ' . $student->risident->street . ' ' . $student->risident->city,
+            {!! Form::label('', trans('wed/show.st_risident'), []) !!}
+            {!! Form::label('', $student->risident->address . ' ' .
+                $student->risident->street . ' ' . 
+                $student->risident->city,
                 ['class'=>'fontchitiet']) 
             !!}
         </div>
         <div class="col-md-12">
-            {!! Form::label('', 'Điện thoại nhà:', []) !!}
+            {!! Form::label('', trans('wed/show.st_hPhone'), []) !!}
             {!! Form::label('', $student->risident->home_phone, ['class'=>'fontchitiet']) !!}
         </div>
         <div class="col-md-12">
-            {!! Form::label('', 'Địa chỉ ngoại trú:', []) !!}
-            {!! Form::label('', $oppidan == null ? '[Chưa cập nhật]': $oppidan->address . ' ' . 
+            {!! Form::label('', trans('wed/show.st_oppi'), []) !!}
+            {!! Form::label('', $oppidan == null ? trans('wed/show.st_update') : $oppidan->address . ' ' . 
                 $oppidan->street . ' ' .
                 $oppidan->city . ' ' . 'Phường' . ' ' .
                 $oppidan->ward, 
                 ['class'=>'fontchitiet']) !!}
         </div>
         <div class="col-md-12">
-            {!! Form::label('', 'Đoàn viên:', []) !!}
-            {!! Form::label('', $student->member->union_member == 0 ? '[Chưa tham gia]': 'Đã tham gia', ['class'=>'fontchitiet']) !!}
+            {!! Form::label('', trans('wed/show.st_union'), []) !!}
+            {!! Form::label('', $student->member->union_member == 0 ? trans('wed/show.st_out') : trans('wed/show.st_is'), ['class'=>'fontchitiet']) !!}
         </div>
         <div class="col-md-12">
-            {!! Form::label('', 'Ngày vào đoàn:', []) !!}
-            {!! Form::label('', $student->member->date_union_member == null ? '[Chưa cập nhật]': $student->member->date_union_member, ['class'=>'fontchitiet']) !!}
+            {!! Form::label('', trans('wed/show.st_dateUnion'), []) !!}
+            {!! Form::label('', $student->member->date_union_member == null ? trans('wed/show.st_update') : $student->member->date_union_member, ['class'=>'fontchitiet']) !!}
         </div>
         <div class="col-md-12">
-            {!! Form::label('', 'Đảng viên:', []) !!}
-            {!! Form::label('', $student->member->adherer_member == 0 ? '[Chưa tham gia]': 'Đã tham gia', ['class'=>'fontchitiet']) !!}
+            {!! Form::label('', trans('wed/show.st_adh'), []) !!}
+            {!! Form::label('', $student->member->adherer_member == 0 ? trans('wed/show.st_out') : trans('wed/show.st_is'), ['class'=>'fontchitiet']) !!}
         </div>
         <div class="col-md-12">
-            {!! Form::label('', 'Ngày vào đảng:', []) !!}
-            {!! Form::label('', $student->member->date_adherer_member == null ? '[Chưa cập nhật]': $student->member->date_adherer_member, ['class'=>'fontchitiet']) !!}
+            {!! Form::label('', trans('wed/show.st_dateAdh'), []) !!}
+            {!! Form::label('', $student->member->date_adherer_member == null ? trans('wed/show.st_update') : $student->member->date_adherer_member, ['class'=>'fontchitiet']) !!}
         </div>
     </div>
     <div class="col-md-2">
         <a class="btn btn-warning button botron" href="{{ route('wed.edit',$student->id) }}">
-            Sửa hồ sơ
+           {{ trans('wed/show.bt_edit') }}
         </a>    
     </div>
 </div>

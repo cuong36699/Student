@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Responsive Sticky Navbar</title>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/viewcss.css') }}">
     <!-- Latest compiled and minified CSS & JS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <script src="//code.jquery.com/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cssFontend/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cssFontend/viewcss.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cssFontend/csschinh.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cssFontend/bootstrap.min.css') }}">
 </head>
 <body>
 
@@ -21,9 +19,9 @@
         <div class="menu-icon">
           <i class="fa fa-bars fa-2x"></i>
       </div>
-         <div id="MyClockDisplay" class="clock"></div>
+      <div id="MyClockDisplay" class="clock"></div>
       <div class="logo">
-          Home
+          Trang chủ
           <a id="menuToggle" class="menutoggle pull-left">
             <i>
               <img class="w3-spin" src="{{ asset('hinhanh/onlyhoa.png') }}"  width="42" height="42">   
@@ -35,32 +33,30 @@
       <ul>
         <li><a target="_blank" href="http://donga.edu.vn/">Tin tức</a></li>
         <li><a target="_blank" href="http://thuvien.donga.edu.vn/view/index.php">Thư viện</a></li>
-            @guest
-            <li>
-                <a href="{{ route('login') }}">
-                    Đăng nhập
-                </a>
-            </li>
-            @else
-            <li>
+        @guest
+        <li>
+            <a href="{{ route('login') }}">
+                Đăng nhập
+            </a>
+        </li>
+        @else
+        <li>
             <div class="user-area dropdown float-right">
                 <a href="{{ route('wed.index') }}">
                     {{ Auth::user()->name }} 
-                     <img class="img-circle" src="{{ asset('hinhanh/'.Auth::user()->student->avatar) }}"  width="42" height="42"> 
+                    <img class="img-circle" src="{{ asset('hinhanh/'.Auth::user()->student->avatar) }}"  width="42" height="42"> 
                 </a>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                         Đăng xuất
-                </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        {{ csrf_field() }}
-                    </form>
-            </div>
-        </li>
-             @endguest
-        
-               
-    </ul>
+                document.getElementById('logout-form').submit();">
+                Đăng xuất
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                {{ csrf_field() }}
+            </form>
+        </div>
+    </li>
+    @endguest
+</ul>
 </div>
 </nav>
 
@@ -94,31 +90,10 @@
   </div>
 </footer>
 </div>
-
-<script type="text/javascript">
-
-      // Menu-toggle button
-
-      $(document).ready(function() {
-        $(".menu-icon").on("click", function() {
-          $("nav ul").toggleClass("showing");
-      });
-    });
-
-      // Scrolling Effect
-
-      $(window).on("scroll", function() {
-        if($(window).scrollTop()) {
-          $('nav').addClass('black');
-      }
-
-      else {
-          $('nav').removeClass('black');
-      }
-  })
-
-
-</script>
-<script src="{{ url('js/dycalendar.js') }}"></script>
+{{-- scrip --}}
+<script type="text/javascript" src="{{ asset('js/fontend/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/fontend/bootstrap.min.js') }}" ></script>
+<script type="text/javascript" src="{{ url('js/fontend/menu.js') }}"></script>
+<script src="{{ url('js/fontend/dycalendar.js') }}"></script>
 </body>
 </html>
