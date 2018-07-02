@@ -2,6 +2,7 @@
 @section('content')
 <div class="form-horizontal">
 	{!! Form::open(array('url' => 'admin/violation', 'method' => 'post', 'data-parsley-validate' => '')) !!}
+	{!! Form::hidden('idsv', $id_sv, []) !!}
 	<div class="container col-md-12">
 		<div class="breadcrumbs">
 			<div class="col-sm-6 row">

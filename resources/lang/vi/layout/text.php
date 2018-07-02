@@ -25,4 +25,6 @@ return [
     'st_workS' => 'Thêm sinh viên',
     'st_workDp' => 'Thêm khoa',
     'st_workC' => 'Thêm lớp',
+    // flash
+    'st_flLanguage' => 'You changed language Us - Uk',
 ];

@@ -59,6 +59,6 @@
 		<label>- Mật khẩu:</label>
 		{{ $identity }}
 	</div>
-	<a href="{{ route('student.index') }}" title="">Tới Trang Sinh viên</a>
+	<a href="{{ route('wed.index') }}" title="">Tới Trang Sinh viên</a>
 </body>
 </html>

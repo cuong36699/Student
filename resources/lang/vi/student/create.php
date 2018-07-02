@@ -19,6 +19,8 @@ return [
     // button
     'bt_back' => 'Trở lại',
     'bt_create' => 'Xác nhận',
+    // flash
+    'st_fl' => 'Đã tạo thành công thông tin sinh viên',
     //  fill Student
     'st_infostudent' => 'Thêm thông tin sinh viên',
     'st_avatar' => 'Ảnh đại diện:',

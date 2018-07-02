@@ -35,7 +35,7 @@ class ViolationController extends Controller
      */
     public function index()
     {
-       
+        // 
     }
 
     /**
@@ -56,6 +56,7 @@ class ViolationController extends Controller
      */
     public function store(StoreBlogViolation $request)
     {
+
         $student_data = Student::findOrFail($request['idsv']);
         
         if ($student_data) {

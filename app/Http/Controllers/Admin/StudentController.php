@@ -11,10 +11,12 @@ use App\Http\Requests\UpdateBlogStudent;
 use App\Models\Student;
 use App\Models\Course;
 use App\Models\Department;
+use App\Models\User;
 use App\Models\Risident;
 use App\Models\Member;
 use Session;
 use Mail;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -23,16 +25,31 @@ class StudentController extends Controller
         $this->middleware('auth:admin');
     }
     
+    public function contact($id)
+    {   
+        $data_student = Student::findOrFail($id);
+        
+        return view('admin/contact.create', compact('data_student'));
+    }
+
+    public function contactsend(Request $request, $id)
+    {
+        $data_student = Student::findOrFail($id);
+        $data = $request->all();
+        // dd($data);
+         Mail::send('admin/mail.contact', $data, function($message) use ($data){
+            $message->to($data['email']);
+            $message->subject('Laravel');
+        });
+        Session::flash('ketqua', 'Đã gửi thông báo cho sinh viên' . ' ' .  $data_student['full_name']);
+
+        return redirect()->route('student.show', $id);
+    }
+
     public function changeLanguage($language)
     {   
         Session::put('website_language', $language);
-        if ($language == 'vi') {
-            $languaged = 'Việt Nam';
-            Session::flash('ketqua', 'Đã thây đổi ngôn ngữ' . ' ' . $languaged);
-        } elseif ($language == 'en') {
-            $languaged = 'English';
-            Session::flash('ketqua', 'Changed language' . ' ' . $languaged);
-        }
+        Session::flash('ketqua', trans('layout/text.st_flLanguage'));
 
         return redirect()->back();
     }
@@ -44,6 +61,7 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
+
         $request->session()->put('search', $request
             ->has('search') ? $request->get('search') : ($request->session()
                 ->has('search') ? $request->session()->get('search') : ''));
@@ -52,7 +70,7 @@ class StudentController extends Controller
             return view('admin/student.ajax', compact('student_all'));
         } else {
             return view('admin/student.index', compact('student_all'));
-        }  
+        }
     }
 
     /**
@@ -104,16 +122,19 @@ class StudentController extends Controller
         $new_student = Student::findOrFail($st_id->id);
         $course_id = $request->input('course_name');
         $new_student->courses()->attach($course_id);
+        // 
+        $user = User::create([
+            'name' => $data['full_name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['identity']),
+            'student_id' => $st_id->id,
+        ]);
         //
         Mail::send('admin/mail.mail', $data, function($message) use ($data){
             $message->to($data['email']);
             $message->subject($data['student_id']);
         });
-        if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Đã tạo thành công thông tin sinh viên' . ' ' . $data['full_name']);
-        }else{
-            Session::flash('ketqua', 'created student' . ' ' .  $data['full_name']);
-        }
+        Session::flash('ketqua', trans('student/create.st_fl') . ' ' .  $data['full_name']);
         
         return redirect()->route('student.index');
     }
@@ -181,12 +202,7 @@ class StudentController extends Controller
             $course_id = $request['course_name'];
             $data_student->courses()->attach($course_id);
         }
-        if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Đã sửa thành công thông tin hồ sơ sinh viên' . ' ' . $request['full_name']);
-        } else {
-            Session::flash('ketqua', 'Edited Student' . ' ' . $request['full_name']);
-        }
-
+        Session::flash('ketqua', trans('student/edit.st_fl') . ' ' . $request['full_name']);
         return redirect()->route('student.show', [$data_student->id]);  
     }
 

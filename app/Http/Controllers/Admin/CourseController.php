@@ -27,6 +27,8 @@ class CourseController extends Controller
             ->has('search') ? $request->get('search') : ($request->session()
                 ->has('search') ? $request->session()->get('search') : ''));
         $course_all = Course::where('course_name', 'like', '%' . $request->session()->get('search') . '%')->paginate(4);
+        $students = Course::findOrFail(3);
+        // dd($students);  
         if ($request->ajax()) {
             return view('admin/course.ajax', compact('course_all'));
         } else {
@@ -129,7 +131,7 @@ class CourseController extends Controller
     public function destroy($id)
     {
         $data = Course::findOrFail($id);
-        $data->delete();
+        $data->students()->delete();
         if (config('app.locale') == 'vi') {
             Session::flash('ketqua', 'Đã xóa Lớp' . ' ' . $data->Course_name);
         } else {

@@ -56,4 +56,9 @@ return [
     'edit_st' => 'Sửa hồ sơ',
     'create_vi' => 'Thêm vi phạm',
     'show_vi' => 'Xem vi phạm',
+    // info oppidan
+    'info_opi' => 'Thông tin ngoại trú:',
+    'bt_crOppi' => 'Thêm ngoại trú',
+    'bt_contact' => 'Liên hệ',
+    'show_opi' => 'Ngoại trú',
 ];

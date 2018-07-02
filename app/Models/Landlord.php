@@ -9,6 +9,9 @@ class Landlord extends Model
     protected $fillable = [
 		'full_name',
 		'phone',
+		'birthday',
+		'gender',
+		'identity',
 		'oppidan_id',
 	];
 

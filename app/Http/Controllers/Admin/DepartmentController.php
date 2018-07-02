@@ -126,10 +126,10 @@ class DepartmentController extends Controller
     public function destroy($id)
     {
         $data = Department::findOrFail($id);
-        $data->delete();
+        $data->courses()->delete();
         if (config('app.locale') == 'vi') {
             Session::flash('ketqua', 'Đã xóa Khoa' . ' ' . $data->department_name);
-        }else{
+        } else {
             Session::flash('ketqua', 'Deleted department' . ' ' . $data->department_name);
         }
         
