@@ -44,6 +44,8 @@ $factory->define(App\Models\Oppidan::class, function (Faker $faker) {
 		'address' => $faker->secondaryAddress,
         'street' => $faker->streetName,
         'city' => $faker->city,
+        'ward' => $faker->city,
+        'status' => rand(0, 1),
     ];
 });
 
@@ -52,6 +54,9 @@ $factory->define(App\Models\Landlord::class, function (Faker $faker) {
     return [
         'full_name' => $faker->name,
         'phone' => $faker->phoneNumber,
+        'birthday' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        'gender' => rand(0, 1),
+        'identity' => '123123123',
     ];
 });
 

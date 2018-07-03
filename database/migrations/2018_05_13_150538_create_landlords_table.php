@@ -17,6 +17,9 @@ class CreateLandlordsTable extends Migration
             $table->increments('id');
             $table->string('full_name');
             $table->string('phone');
+            $table->string('identity');
+            $table->date('birthday');
+            $table->boolean('gender');
             $table->integer('oppidan_id')->unsigned()->index();
             $table->timestamps();
         });

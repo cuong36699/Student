@@ -19,6 +19,8 @@ return [
     'st_student' => 'Student',
     'st_department' => 'Department',
     'st_course' => 'Course',
+    // flash
+    'st_flLanguage' => 'Đã thay đổi thành ngôn ngữ tiếng Việt',
     // 
     'st_wStudent' => 'Work - Student',
     'st_work' => 'Work',

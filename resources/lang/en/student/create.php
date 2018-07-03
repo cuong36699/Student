@@ -37,6 +37,8 @@ return [
     'st_department' => 'Department:',
     'st_course' => 'Course:',
     'st_select' => '--- Select ---',
+    // flash
+    'st_fl' => 'Created student',
     // fill member
     'st_member' => 'Member information:',
     'st_union' => 'IsUnion:',

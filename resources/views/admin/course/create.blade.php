@@ -46,9 +46,5 @@
 		</tbody>
 	</table>
 </div>
-{{-- phân trang --}}
-<div class="form-group center">
-	{!! $department_all->links() !!}
-</div>
 @endsection
 

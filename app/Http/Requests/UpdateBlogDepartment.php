@@ -24,7 +24,7 @@ class UpdateBlogDepartment extends FormRequest
    public function rules()
     {
         return [
-            'department_name' => 'required|max:150|min:1',
+            'department_name' => 'required|max:150|min:1|unique:departments,department_name,' . $this->department,
             'degree' => 'required|max:150|min:1',
             'graduation_year' => 'required|numeric|max:10000|min:1',
         ];
@@ -37,6 +37,7 @@ class UpdateBlogDepartment extends FormRequest
                 'department_name.required' => 'Vui lòng chọn Tên khoa',
                 'department_name.min' => 'Tên khoa không được dưới 1 ký tự',
                 'department_name.max' => 'Tên khoa không được quá 150 ký tự',
+                'department_name.unique' => 'khoa đã tồn tại',
                 // Bậc học
                 'degree.required' => 'Vui lòng chọn Bậc học',
                 'degree.min' => 'Bậc học không được dưới 1 ký tự',

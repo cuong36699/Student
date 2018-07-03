@@ -10,6 +10,8 @@ class Oppidan extends Model
 		'address',
 		'street',
 		'city',
+		'ward',
+		'status',
 		'student_id',
 	];
 

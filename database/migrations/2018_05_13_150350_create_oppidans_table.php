@@ -18,6 +18,8 @@ class CreateOppidansTable extends Migration
             $table->string('address');
             $table->string('street');
             $table->string('city');
+            $table->string('ward');
+            $table->boolean('status');
             $table->integer('student_id')->unsigned()->index();
             $table->timestamps();
         });

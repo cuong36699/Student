@@ -52,6 +52,11 @@ return [
     'st_course' => 'Information course:',
     'st_degree' => 'Degree:',
     'st_graduationyear' => 'Graduation Year:',
+    // info oppidan
+    'info_opi' => 'Information Oppidan:',
+    'bt_crOppi' => 'Create oppidan',
+    'bt_contact' => 'Contact',
+    'show_opi' => 'Oppidan',
     // button
     'back_button' => 'Back',
     'edit_st' => 'Edit student',

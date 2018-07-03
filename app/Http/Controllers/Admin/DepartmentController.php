@@ -7,15 +7,19 @@ use App\Models\Department;
 use App\Models\Course;
 use App\Http\Requests\StoreBlogDepartment;
 use App\Http\Requests\UpdateBlogDepartment;
+use App\Repositories\Contracts\DepartmentRepository;
 use Session;
-use Carbon;
 
 class DepartmentController extends Controller
 {
-    public function __construct()
+    protected $repository;
+
+    public function __construct(DepartmentRepository $repository)
     {
+        $this->repository = $repository;
         $this->middleware('auth:admin');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,8 +29,10 @@ class DepartmentController extends Controller
     {
         $request->session()->put('search', $request
             ->has('search') ? $request->get('search') : ($request->session()
-                ->has('search') ? $request->session()->get('search') : ''));
-        $department_all = Department::where('department_name', 'like', '%' . $request->session()->get('search') . '%')->paginate(4);
+            ->has('search') ? $request->session()->get('search') : ''));
+
+        $department_all = $this->repository->findByFieldLike('department_name', $request->session()->get('search'), 4);
+
         if ($request->ajax()) {
             return view('admin/department.ajax', compact('department_all'));
         } else {
@@ -42,7 +48,7 @@ class DepartmentController extends Controller
     public function create()
     {
         $timestemp = today();
-        $year = Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $timestemp)->year;
+        $year = $this->repository->yearCarbon($timestemp);
 
         return view('admin/department.create', compact('year'));
     }
@@ -56,15 +62,11 @@ class DepartmentController extends Controller
     public function store(StoreBlogDepartment $request)
     {
         $data = $request->all();
-        $department_id= Department::create($data);
-        if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Tạo mới khoa thành công' . ' ' . $data['department_name']);
-        } else {
-            Session::flash('ketqua', 'Created department' . ' ' . $data['department_name']);
-        }
-        
+        $department_data = $this->repository->departmentCreate($data);
 
-        return redirect()->route('department.show', $department_id);
+        Session::flash('ketqua', 'Tạo mới khoa thành công' . ' ' . $data['department_name']);
+    
+        return redirect()->route('department.show', $department_data);
     }
 
     /**
@@ -75,7 +77,8 @@ class DepartmentController extends Controller
      */
     public function show($id)
     {
-        $department_show = Department::findOrFail($id);
+        $department_show = $this->repository->findOrFailDepartment($id);
+
         $paging_course = $department_show->courses()->paginate(5);
         
         return view('admin/department.show', compact('department_show', 'paging_course'));
@@ -89,9 +92,10 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        $department_edit = Department::findOrFail($id);
+        $department_edit = $this->repository->findOrFailDepartment($id);
+
         $timestemp = today();
-        $year = Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $timestemp)->year;
+        $year = $this->repository->yearCarbon($timestemp);
 
         return view('admin/department.edit', compact('department_edit','year'));
     }
@@ -105,15 +109,13 @@ class DepartmentController extends Controller
      */
     public function update(UpdateBlogDepartment $request, $id)
     {
-        $data_department = department::findOrFail($id);
+        $data_department = $this->repository->findOrFailDepartment($id);
+
         $data_rq = $request->all();
         $data_department->update($data_rq);
-        if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Cập nhật thành công thông tin khoa'. ' '. $data_rq['department_name']);
-        }else{
-            Session::flash('ketqua', 'Edited department'. ' '. $data_rq['department_name']);
-        }
-    
+
+        Session::flash('ketqua', 'Cập nhật thành công thông tin khoa'. ' '. $data_rq['department_name']);
+
         return redirect()->route('department.show', $id);
     }
 
@@ -125,13 +127,11 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        $data = Department::findOrFail($id);
+        $data = $this->repository->findOrFailDepartment($id);
         $data->delete();
-        if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Đã xóa Khoa' . ' ' . $data->department_name);
-        }else{
-            Session::flash('ketqua', 'Deleted department' . ' ' . $data->department_name);
-        }
+        $data->courses()->delete();
+
+        Session::flash('ketqua', 'Đã xóa Khoa' . ' ' . $data->department_name);
         
         return redirect()->route('department.index');
     }

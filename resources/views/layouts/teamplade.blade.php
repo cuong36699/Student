@@ -43,7 +43,7 @@
                 </a>
                 {{-- lo go 2  --}}
                 <a class="navbar-brand hidden" href="./">
-                    <img src="{{ asset('images/logo2.png') }}" alt="Logo">
+                    <img src="{{ asset('css/cssTeamplade/images/logo2.png') }}" alt="Logo">
                 </a>
             </div>
             <div id="main-menu" class="main-menu collapse navbar-collapse">
@@ -115,7 +115,7 @@
                         {{-- admin --}}
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
                             {{ Auth::user()->name }} <span class="caret"></span>
-                             <img class="user-avatar rounded-circle" src="{{ asset('images/admin.jpg') }}" alt="User Avatar">
+                             <img class="user-avatar rounded-circle" src="{{ asset('css/cssTeamplade/images/admin.jpg') }}" alt="User Avatar">
                             <i class="fa fa-angle-double-down"></i>
                         </a>
                         {{-- drow admin --}}
@@ -147,26 +147,26 @@
                         </a>
                         <div class="dropdown-menu col-md-12" aria-labelledby="language">
                             @if (config('app.locale') == 'vi')
-                            <a href="{!! route('user.change-language', ['vi']) !!}">
+                            <a href="{!! route('admin.change-language', ['vi']) !!}">
                                 <p>
                                     <span class="flag-icon flag-icon-vn"></span>
                                     Việt
                                 </p>
                             </a>
-                            <a href="{!! route('user.change-language', ['en']) !!}">
+                            <a href="{!! route('admin.change-language', ['en']) !!}">
                                 <p>
                                     <span class="flag-icon flag-icon-us"></span>
                                     Mỹ
                                 </p>
                             </a>   
                             @else
-                            <a href="{!! route('user.change-language', ['vi']) !!}">
+                            <a href="{!! route('admin.change-language', ['vi']) !!}">
                                 <p>
                                     <span class="flag-icon flag-icon-vn"></span>
                                     Vietnam
                                 </p>
                             </a>
-                            <a href="{!! route('user.change-language', ['en']) !!}">
+                            <a href="{!! route('admin.change-language', ['en']) !!}">
                                 <p>
                                     <span class="flag-icon flag-icon-us"></span>
                                     US-UK
@@ -200,7 +200,7 @@
                 @endif
                 {{-- Nội dung --}}
                 @yield('css')
-                {!!csrf_field()!!}
+                {!! csrf_field() !!}
                 @yield('content')
                 {{-- thu vien ajax paging --}}
                 <script src="{{ asset('js/backend/jqueryAjax.min.js') }}"></script>

@@ -1,5 +1,5 @@
 <?php
-namespace Prettus\Repository\Eloquent;
+namespace App\Repositories\Eloquents;
 
 use Closure;
 use Exception;
@@ -8,26 +8,15 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Prettus\Repository\Contracts\CriteriaInterface;
-use Prettus\Repository\Contracts\Presentable;
-use Prettus\Repository\Contracts\PresenterInterface;
-use Prettus\Repository\Contracts\RepositoryCriteriaInterface;
-use Prettus\Repository\Contracts\RepositoryInterface;
-use Prettus\Repository\Events\RepositoryEntityCreated;
-use Prettus\Repository\Events\RepositoryEntityDeleted;
-use Prettus\Repository\Events\RepositoryEntityUpdated;
-use Prettus\Repository\Exceptions\RepositoryException;
-use Prettus\Repository\Traits\ComparesVersionsTrait;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
+use App\Repository\Contracts\RepositoryCriteriaInterface;
+use App\Repositories\Contracts\RepositoryInterface;
 
 /**
  * Class BaseRepository
  * @package Prettus\Repository\Eloquent
  */
-abstract class BaseRepository implements RepositoryInterface, RepositoryCriteriaInterface
+abstract class BaseRepository implements RepositoryInterface
 {
-    use ComparesVersionsTrait;
 
     /**
      * @var Application
@@ -37,7 +26,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     /**
      * @var Model
      */
-    protected $q;
+    protected $model;
 
     /**
      * @var array

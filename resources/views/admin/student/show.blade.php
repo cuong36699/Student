@@ -17,7 +17,6 @@
 				<div class="pull-right">
 					<div class="input-group notify">
 						<a class="btn btn-warning button botron" href="{{ URL::previous() }}">
-							{{ trans('student/show.back_button') }}
 							<i class="fa fa-arrow-left"></i>
 						</a>	
 					</div>
@@ -246,6 +245,29 @@
 					{!! Form::label('', trans('student/show.st_graduationyear'), ['class'=>'col-md-5 control-label']) !!}
 					{{$course->department->graduation_year}}
 				</div>	
+			</div>
+			<hr>
+			{{-- Thông tin ngoại trú--}}
+			<div class="form-group row">
+				<h5 class="h3info">
+					{{ trans('student/show.info_opi') }}	
+				</h5>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-12 center">
+					<a href="{{ url('admin/student/contact', $student->id) }}" class="btn btn-warning button botron2">
+						{{ trans('student/show.bt_contact') }} 
+						<i class="fa fa-envelope"></i>
+					</a>
+					<a href="{{ url('admin/oppidan/create', $student->id) }}" class="btn btn-warning button botron3">
+						{{ trans('student/show.bt_crOppi') }} 
+						<i class="fa fa-check-square-o"></i>
+					</a>
+					<a href="{{ route('oppidan.show', $student->id) }}" class="btn btn-info button botron1">
+						{{ trans('student/show.show_opi') }} 
+						<i class="fa fa-list"></i>
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>

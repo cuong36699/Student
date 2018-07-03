@@ -19,6 +19,8 @@ return [
     // button
     'bt_back' => 'Back',
     'bt_create' => 'Edit',
+    // flash
+    'st_fl' => 'Edited Student',
     //  fill Student
     'st_infostudent' => 'Edit information student',
     'st_avatar' => 'Avatar:',

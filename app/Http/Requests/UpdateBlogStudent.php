@@ -26,6 +26,7 @@ class UpdateBlogStudent extends FormRequest
        return [
             'avatar' => 'file|image|mimes:jpeg,png,jpg,gif,svg|max:2048|',
             'email' => 'unique:students,email,' . $this->student,
+            'phone' => 'unique:students,phone,' . $this->student,
         ];
     }
 
@@ -39,6 +40,8 @@ class UpdateBlogStudent extends FormRequest
                 'avatar.max' => 'Tên file không được quá 2048 ký tự',
                 // email
                 'email.unique' => 'Email này đã có người sử dụng',
+                // phone
+                'phone.unique' => 'Số điện này đã được sử dụng',
             ];
         }else{
             return [];
