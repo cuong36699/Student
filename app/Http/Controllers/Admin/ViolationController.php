@@ -8,23 +8,26 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreBlogViolation;
 use App\Http\Requests\UpdateBlogViolation;
 use Illuminate\Support\Facades\Validator;
+use App\Repositories\Contracts\ViolationRepository;
 use App\Models\Student;
 use App\Models\Violation;
 use Session;
 
 class ViolationController extends Controller
 {
-    public function __construct()
+    protected $repository;
+
+    public function __construct(ViolationRepository $repository)
     {
+        $this->repository = $repository;
         $this->middleware('auth:admin');
     }
     
     public function createid($id)
     {
-        // lay tên sinh viên và id
-        $name_student= Student::findOrFail($id);
+        $name_student = $this->repository->findOrFailStudent($id);
         $id_sv = $id;
-        // dd($id_sv);
+
         return view('admin/violation.create', compact('id_sv', 'name_student'));
     }
 
@@ -56,22 +59,14 @@ class ViolationController extends Controller
      */
     public function store(StoreBlogViolation $request)
     {
-
-        $student_data = Student::findOrFail($request['idsv']);
+        $student_data = $this->repository->findOrFailStudent($request['idsv']);
         
-        if ($student_data) {
-            $violation_data = new Violation;
-            $violation_data->date_violation = $request['date_violation'];
-            $violation_data->form_of_violation = $request['form_of_violation'];
-            $violation_data->discipline = $request['discipline'];
-            $violation_data->student_id = $student_data;
-            $student_data->violations()->save($violation_data);
-        }
-        if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Đã tạo vi phạm cho sinh viên' . $student_data->full_name);
-        } else {
-            Session::flash('ketqua', 'Created violation for' . $student_data->full_name);
-        }
+        $data = $request->all();
+        $data['student_id'] = $student_data->id;
+        $violation_data = $this->repository->violationCreate($data);
+        $student_data->violations()->save($violation_data);
+
+        Session::flash('ketqua', 'Đã tạo vi phạm cho sinh viên' . $student_data->full_name);
 
         return redirect()->route('student.show', $request['idsv']);
     }
@@ -84,8 +79,7 @@ class ViolationController extends Controller
      */
     public function show($id)
     {
-        $student_data = Student::findOrFail($id);
-        // lấy lớp thông qua pivot 
+        $student_data = $this->repository->findOrFailStudent($id);
         $violation = $student_data->violations()->where('student_id', $id)->get();
 
         return view('admin/violation.show', compact('violation', 'student_data'));
@@ -99,7 +93,7 @@ class ViolationController extends Controller
      */
     public function edit($id)
     {
-        $violation_edit = Violation::findOrFail($id);
+        $violation_edit = $this->repository->findOrFailViolation($id);
 
         return view('admin/violation.edit', compact('violation_edit'));
     }
@@ -113,16 +107,11 @@ class ViolationController extends Controller
      */
     public function update(UpdateBlogViolation $request, $id)
     {
-        $data = Violation::findOrFail($id);
-        $data->date_violation = $request['date_violation'];
-        $data->form_of_violation = $request['form_of_violation'];
-        $data->discipline = $request['discipline'];
-        $data->save();
-        if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Cập nhật thành công thông tin vi phạm!');
-        } else {
-            Session::flash('ketqua', 'Updated for violation!');
-        }
+        $violation_data = $this->repository->findOrFailViolation($id);
+        $data = $request->all();
+        $violation_data->update($data);
+
+        Session::flash('ketqua', 'Cập nhật thành công thông tin vi phạm!');
 
         return redirect()->route('student.index');
     }
@@ -135,13 +124,10 @@ class ViolationController extends Controller
      */
     public function destroy($id)
     {
-        $data = Violation::findOrFail($id);
+        $data = $this->repository->findOrFailViolation($id);
         $data->delete();
-        if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Đã xóa thành công vi phạm');
-        } else {
-            Session::flash('ketqua', 'Deleted for violation!');
-        }
+
+        Session::flash('ketqua', 'Đã xóa thành công vi phạm');
 
         return redirect()->back();
     }

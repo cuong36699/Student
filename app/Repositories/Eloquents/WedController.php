@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
+use App\Models\Student;
+use App\Models\Oppidan;
+use App\Models\Landlord;
+use App\Models\Course;
 use Illuminate\Support\Facades\Auth;
-use App\Repositories\Contracts\WedRepository;
+use App\Repositories\Contracts\WebRepository;
 use Session;
 
 class WedController extends Controller
 {
     protected $repository;
 
-    public function __construct(WedRepository $repository)
+    public function __construct(WebRepository $repository)
     {
         $this->repository = $repository;
         $this->middleware('auth');
@@ -32,19 +36,21 @@ class WedController extends Controller
      */
     public function index()
     {
-        $student = $this->repository->findOrFailStudent(Auth::id());
+        $ids = Auth::id();
+        $student = $this->repository->findOrFailStudent($ids);
 
         return view('wed.index',compact('student'));
     }
 
     public function course($id)
     {
-        $student_id = $this->repository->findOrFailStudent(Auth::id());
-        $course_id = $student_id->courses->last()->id;
-        $course_show = $this->repository->findOrFailCourse($course_id);
+        $ids = Auth::id();
+        $student_id = Student::findOrFail($ids);
+        $course_show = Course::findOrFail($student_id->courses->last()->id);
 
-        $count = $course_show->students()->where('course_id', $course_id)->count();
-        $students = $course_show->students()->where('course_id', $course_id)->get();       
+        $count = $course_show->students()->where('course_id', $student_id->courses->last()->id)->count();
+        $students = $course_show->students()->where('course_id', $student_id->courses->last()->id)->get();       
+
 
         return view('wed.course', compact('student_id','course_show', 'students', 'count'));
     }
@@ -77,11 +83,13 @@ class WedController extends Controller
      */
     public function show($id)
     {
-        $student_data = $this->repository->findOrFailStudent(Auth::id());
-        $student = $this->repository->findWithStudent(['member', 'risident'], Auth::id());
+        $ids = Auth::id();
+        $student_data = Student::findOrFail($ids);
+        $student = Student::with('member', 'risident')->findOrFail($ids);
+        // lay lop cuoi
         $course = $student->courses->last();
         $oppidan = $student_data->oppidans->last();
-        
+        // dd($oppidan);
         return view('wed.show',compact('student', 'course', 'oppidan'));
     }
 
@@ -93,11 +101,14 @@ class WedController extends Controller
      */
     public function edit($id)
     {
-        $student_data = $this->repository->findOrFailStudent(Auth::id());
-        $student = $this->repository->findWithStudent(['member', 'risident'], Auth::id());
+        $ids = Auth::id();
+        $student_data = Student::findOrFail($ids);
+        $student = Student::with('member', 'risident')->findOrFail($ids);
+        // lay lop cuoi
         $course = $student->courses->last();
         $oppidan = $student_data->oppidans->last();
-
+        // dd($oppidan);
+        // dd($oppidan);
         return view('wed.edit',compact('student', 'course', 'oppidan'));
     }
 
@@ -110,21 +121,34 @@ class WedController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data_student = $this->repository->findOrFailStudent(Auth::id());
+        $ids = Auth::id();
+        $data_student = Student::findOrFail($ids);
         $data_rq = $request->all();
         $data_student->update($data_rq);
-        $data_rq['student_id'] = $data_student->id;
         // update member
         $data_student->member->update($data_rq);
          // update risident
         $data_student->risident->update($data_rq);
-        $oppidan_data = $this->repository->oppidanCreate($data_rq);
-        $data_rq['oppidan_id'] = $oppidan_data->id;
-        $landlord_data = $this->repository->landlordCreate($data_rq);
-
-        Session::flash('ketqua', 'Đã sửa thành công' . ' ' . $request['full_name']);
-
-        return redirect()->route('wed.show', Auth::id());
+        // 
+         $oppidan_data = new Oppidan;
+            $oppidan_data->address = $request['addressopi'];
+            $oppidan_data->street = $request['streetopi'];
+            $oppidan_data->city = $request['cityopi'];
+            $oppidan_data->ward = $request['wardopi'];
+            $oppidan_data->status = 0;
+            $oppidan_data->student_id = $data_student;
+            $data_student->oppidans()->save($oppidan_data);
+            // 
+            $landlord_data = new Landlord;
+            $landlord_data->full_name = $request['full_nameland'];
+            $landlord_data->gender = $request['genderland'];
+            $landlord_data->phone = $request['phoneland'];
+            $landlord_data->identity = $request['identityland'];
+            $landlord_data->birthday = $request['birthdayland'];
+            $oppidan_data->landlord()->save($landlord_data);
+        // $oppidan = Oppidan::create($data_rq);
+        // $landlord = Landlord::create($data_rq);
+        return redirect()->route('wed.show',$ids);
     }
 
     /**

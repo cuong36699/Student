@@ -3,17 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\Department;
-use App\Models\Course;
 use App\Http\Requests\StoreBlogCourse;
 use App\Http\Requests\UpdateBlogCourse;
+use App\Models\Department;
+use App\Models\Course;
 use App\Models\Student;
+use App\Repositories\Contracts\CourseRepository;
 use Session;
 
 class CourseController extends Controller
 {
-    public function __construct()
+    protected $repository;
+
+    public function __construct(CourseRepository $repository)
     {
+        $this->repository = $repository;
         $this->middleware('auth:admin');
     }
     /**
@@ -26,14 +30,15 @@ class CourseController extends Controller
         $request->session()->put('search', $request
             ->has('search') ? $request->get('search') : ($request->session()
                 ->has('search') ? $request->session()->get('search') : ''));
-        $course_all = Course::where('course_name', 'like', '%' . $request->session()->get('search') . '%')->paginate(4);
-        $students = Course::findOrFail(3);
-        // dd($students);  
+
+        $course_all = $this->repository->findByFieldLike('course_name', $request->session()->get('search'), 4);
+
         if ($request->ajax()) {
             return view('admin/course.ajax', compact('course_all'));
         } else {
             return view('admin/course.index', compact('course_all'));
         }
+
     }
 
     /**
@@ -43,7 +48,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        $department_all = Department::paginate(4);
+        $department_all = $this->repository->allDepartment();
 
         return view('admin/course.create', compact('department_all'));
     }
@@ -56,20 +61,14 @@ class CourseController extends Controller
      */
     public function store(StoreBlogCourse $request)
     {
-        $department_data = Department::findOrFail($request['department_id']);
-        if ($department_data) {
-            $course_data = new Course;
-            $course_data->course_name = $request['course_name'];
-            $course_data->department_id = $request['department_id'];
-            $department_data->courses()->save($course_data);
-        }
-        if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Tạo lớp thành công' . ' ' . $request['course_name']);
-        } else {
-            Session::flash('ketqua', 'Created course' . ' ' . $request['course_name']);
-        }
+        $data = $request->all();
+        $department_data = $this->repository->findOrFailDepartment($request['department_id']);
+        $course_data = $this->repository->courseCreate($data);
+        $department_data->courses()->save($course_data);
 
-        return redirect()->route('course.show', $course_data->id);
+        Session::flash('ketqua', 'Tạo lớp thành công' . ' ' . $request['course_name']);
+
+        return redirect()->back();
     }
 
     /**
@@ -80,7 +79,8 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        $course_show = Course::findOrFail($id);
+        $course_show = $this->repository->findOrFailCourse($id);
+        // 
         $count = $course_show->students()->where('course_id', $id)->count();
         $students = $course_show->students()->where('course_id', $id)->get();       
 
@@ -95,9 +95,9 @@ class CourseController extends Controller
      */
     public function edit($id)
     {
-        $lop_edit = Course::findOrFail($id);
+        $course_edit = $this->repository->findOrFailCourse($id);
 
-        return view('admin/course.edit', compact('lop_edit'));
+        return view('admin/course.edit', compact('course_edit'));
     }
 
     /**
@@ -109,15 +109,12 @@ class CourseController extends Controller
      */
     public function update(UpdateBlogCourse $request, $id)
     {
-        $data = Course::findOrFail($id);
-        $request = $request->all();// lấy hết giá trị từ view
-        $data->course_name = $request['course_name'];
-        $data->save();
-        if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Cập nhật thành công thông tin lớp!');
-        } else {
-            Session::flash('ketqua', 'Updated course!');
-        }
+        $course_data = $this->repository->findOrFailCourse($id);
+
+        $data = $request->all();
+        $course_data->update($data);
+
+        Session::flash('ketqua', 'Cập nhật thành công thông tin lớp!');
 
         return redirect()->route('course.show',$id);
     }
@@ -130,13 +127,12 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        $data = Course::findOrFail($id);
+        $data = $this->repository->findOrFailCourse($id);
+
+        $data->delete();
         $data->students()->delete();
-        if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Đã xóa Lớp' . ' ' . $data->Course_name);
-        } else {
-            Session::flash('ketqua', 'Deleted course' . ' ' . $data->Course_name);
-        }
+
+        Session::flash('ketqua', 'Đã xóa Lớp' . ' ' . $data->course_name);
         
         return redirect()->route('course.index');
     }

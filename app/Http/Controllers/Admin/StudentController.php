@@ -5,42 +5,54 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreBlogStudent;
 use App\Http\Requests\UpdateBlogStudent;
-use App\Models\Student;
-use App\Models\Course;
-use App\Models\Department;
-use App\Models\User;
-use App\Models\Risident;
-use App\Models\Member;
+use App\Repositories\Contracts\StudentRepository;
 use Session;
-use Mail;
-use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
-    public function __construct()
+    protected $repository;
+
+    public function __construct(StudentRepository $repository)
     {
+        $this->repository = $repository;
         $this->middleware('auth:admin');
     }
     
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $request->session()->put('search', $request
+            ->has('search') ? $request->get('search') : ($request->session()
+            ->has('search') ? $request->session()->get('search') : ''));
+        $student_all = $this->repository->findByFieldLike('full_name', $request->session()->get('search'), 4);
+        
+        if ($request->ajax()) {
+            return view('admin/student.ajax', compact('student_all'));
+        } else {
+            return view('admin/student.index', compact('student_all'));
+        }
+    }
+
     public function contact($id)
     {   
-        $data_student = Student::findOrFail($id);
+        $data_student = $this->repository->findOrFailStudent($id);
         
         return view('admin/contact.create', compact('data_student'));
     }
 
     public function contactsend(Request $request, $id)
     {
-        $data_student = Student::findOrFail($id);
+        $data_student = $this->repository->findOrFail($id);
         $data = $request->all();
-        // dd($data);
-         Mail::send('admin/mail.contact', $data, function($message) use ($data){
-            $message->to($data['email']);
-            $message->subject('Laravel');
-        });
+        $sendMail = $this->repository->sendMail('admin/mail.contact', $data);
         Session::flash('ketqua', 'Đã gửi thông báo cho sinh viên' . ' ' .  $data_student['full_name']);
 
         return redirect()->route('student.show', $id);
@@ -55,32 +67,14 @@ class StudentController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        $request->session()->put('search', $request
-            ->has('search') ? $request->get('search') : ($request->session()
-                ->has('search') ? $request->session()->get('search') : ''));
-        $student_all = Student::where('full_name', 'like', '%' . $request->session()->get('search') . '%')->paginate(4);
-        if ($request->ajax()) {
-            return view('admin/student.ajax', compact('student_all'));
-        } else {
-            return view('admin/student.index', compact('student_all'));
-        }
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $course_name = Course::pluck('course_name', 'id');
-        $deparments = Department::pluck('department_name', 'id')->all();
+        $course_name = $this->repository->pluckCourse('course_name', 'id');
+        $deparments = $this->repository->pluckDepartment('department_name', 'id');
 
         return view('admin/student.create', compact('course_name', 'deparments'));
     }
@@ -88,7 +82,7 @@ class StudentController extends Controller
     public function showCourseInDepartment(Request $request)
     {
         if ($request->ajax()) {
-            $courseAjax = Course::whereDepartmentId($request->department_id)->select('id', 'course_name')->get();
+            $courseAjax = $this->repository->departmentShowCourse($request->department_id,['id', 'course_name']);
 
             return response()->json($courseAjax);
         }
@@ -102,37 +96,30 @@ class StudentController extends Controller
      */
     public function store(StoreBlogStudent $request)
     {
-        // dd($request);
-        // nhận tên thời gian image và di chuyển hình vào thư mục hình ảnh
         $image = time() . '.' . $request['avatar']->getClientOriginalName();
         request()->avatar->move(public_path('hinhanh'), $image);
-        // 
+
         $data = $request->all();
         $data['avatar'] = $image;
         // create Student
-        $st_id = Student::create($data);
+        $student_id = $this->repository->studentCreate($data);
         // get student id
-        $data['student_id'] = $st_id->id;
+        $data['student_id'] = $student_id->id;
         // create member
-        $member_id = Member::create($data);
+        $member_id = $this->repository->memberCreate($data);
         // create risident
-        $risident_id = Risident::create($data);
+        $risident_id = $this->repository->risidentCreate($data);
         // create course
-        $new_student = Student::findOrFail($st_id->id);
+        $new_student = $this->repository->findOrFailStudent($student_id->id);
         $course_id = $request->input('course_name');
         $new_student->courses()->attach($course_id);
-        // 
-        $user = User::create([
-            'name' => $data['full_name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['identity']),
-            'student_id' => $st_id->id,
-        ]);
-        //
-        Mail::send('admin/mail.mail', $data, function($message) use ($data){
-            $message->to($data['email']);
-            $message->subject($data['student_id']);
-        });
+        // create user password
+        $data['name'] = $data['full_name'];
+        $data['password'] = Hash::make($data['identity']);
+        $user = $this->repository->userCreate($data);
+        // send mail
+        $sendMail = $this->repository->sendMail('admin/mail.mail', $data);
+        
         Session::flash('ketqua', trans('student/create.st_fl') . ' ' .  $data['full_name']);
         
         return redirect()->route('student.index');
@@ -146,10 +133,10 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        $student = Student::with('member', 'risident')->findOrFail($id);
-        // lay lop cuoi
+        $student = $this->repository->findWithStudent(['member', 'risident'], $id);
+        // last course
         $course = $student->courses->last();
-        
+
         return view('admin/student.show', compact('student', 'course'));
     }
 
@@ -161,10 +148,10 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $departments = Department::pluck('department_name', 'id')->all();
-        $student_edit = Student::with('member', 'risident', 'courses')->findOrFail($id);
-        //  lay id lop de xuat ten khoa
-        $course_id = Course::findOrFail($student_edit->courses->last()->id);
+        $departments = $this->repository->pluckDepartment('department_name', 'id');
+        $student_edit = $this->repository->findWithStudent(['member', 'risident', 'courses'], $id);
+        // Get id course have department
+        $course_id = $this->repository->findOrFailCourse($student_edit->courses->last()->id);
 
         return view('admin/student.edit', compact('course_id', 'student_edit', 'departments'));
     }
@@ -178,30 +165,34 @@ class StudentController extends Controller
      */
     public function update(UpdateBlogStudent $request, $id)
     {
-        $data_student = Student::findOrFail($id);
+        $data_student = $this->repository->findOrFailStudent($id);
         $data_rq = $request->all();
-        // 
+        // Validate imgae
         if ($request['avatar'] == null) {
             $data_rq['avatar'] = $data_student->avatar;
-        }else{
+        } else {
             $image = time() . '.' . $request['avatar']->getClientOriginalName();
             request()->avatar->move(public_path('hinhanh'), $image);
             $data_rq['avatar'] = $image;
         }
+        // update student
         $data_student->update($data_rq);
         // update member
         $data_student->member->update($data_rq);
         // update risident
         $data_student->risident->update($data_rq);
-        // lớp lấy id lớp của sv để so sánh
+        // Get id course compare
         $compare_course = $data_student->courses()->get()->last();
-        // nếu tên nhập vs tên đã có sẵn trùng nhâu thì không cần thêm trồng lên nhâu
-        if ($compare_course->id == $request['course_name']) {      
+
+        if ($compare_course->id == $request['course_name']) {
+
         } else {
             $course_id = $request['course_name'];
             $data_student->courses()->attach($course_id);
         }
+
         Session::flash('ketqua', trans('student/edit.st_fl') . ' ' . $request['full_name']);
+
         return redirect()->route('student.show', [$data_student->id]);  
     }
 
@@ -213,13 +204,11 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        $data = Student::findOrFail($id);
+        $data = $this->repository->findOrFailStudent($id);
         $data->delete();
-        if (config('app.locale') == 'vi') {
-            Session::flash('ketqua', 'Đã xóa sinh viên tên' . ' ' . $data->full_name);
-        } else {
-            Session::flash('ketqua', 'Deleted student' . ' ' . $data->full_name);
-        }
+
+        Session::flash('ketqua', 'Đã xóa sinh viên tên' . ' ' . $data->full_name);
+
         return redirect()->back();
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Prettus\Repository\Contracts;
+namespace App\Repositories\Contracts;
 
 /**
  * Interface RepositoryInterface

@@ -1,6 +1,7 @@
 @extends('../layouts/teamplade')
 @section('content')
-{!! Form::model($lop_edit, array('route' => array('course.update', $lop_edit->id), 'method' => 'put', 'data-parsley-validate' => '')) !!}
+{!! Form::model($course_edit, array('route' => array('course.update', $course_edit->id), 'method' => 'put', 'data-parsley-validate' => ''
+)) !!}
 <div class="form-horizontal">
 	<div class="container col-md-12">
 		<div class="breadcrumbs">
@@ -9,7 +10,7 @@
 					<div class="page-title">
 						<ol class="breadcrumb text-right">
 							<li><a href="{{ route('course.index') }}">{{ trans('course/edit.st_url') }}</a></li>
-							<li class="active">[{{ trans('course/edit.st_edit') }}] [{{$lop_edit->course_name}}]</li>
+							<li class="active">[{{ trans('course/edit.st_edit') }}] [{{$course_edit->course_name}}]</li>
 						</ol>
 					</div>	
 				</div>
@@ -30,7 +31,7 @@
 				{!! Form::label('', trans('course/edit.st_course'), ['class' => 'col-md-3 control-label fontchu']) !!}
 				<div class="col-sm-9 {{$errors->has('course_name') ? 'has-error' : '' }}" role="alert">
 					{!! Form::text('course_name',
-					 	$lop_edit->course_name, [
+					 	$course_edit->course_name, [
 					 	'class' => 'form-control',
 					 	'required' => '',
 					 	'maxlength' => '30',
