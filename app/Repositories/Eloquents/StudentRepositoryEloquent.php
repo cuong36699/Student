@@ -33,6 +33,7 @@ class StudentRepositoryEloquent extends BaseRepository implements StudentReposit
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
     public function findByFieldLike($field, $session, $paginate)
     {
         $this->applyCriteria();

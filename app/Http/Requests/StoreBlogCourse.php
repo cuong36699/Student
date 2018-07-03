@@ -24,7 +24,7 @@ class StoreBlogCourse extends FormRequest
     public function rules()
     {
         return [
-            'course_name' => 'required|max:150|min:1',
+            'course_name' => 'required|unique:courses',
         ];
     }
     public function messages()
@@ -33,8 +33,7 @@ class StoreBlogCourse extends FormRequest
             return [
                 // tên Khoa
                 'course_name.required' => 'Vui lòng nhập Tên lớp',
-                'course_name.min' => 'Tên lớp không được dưới 1 ký tự',
-                'course_name.max' => 'Tên lớp không được quá 150 ký tự',
+                'course_name.unique' => 'Tên lớp đã tồn tại',
             ];
         }else{
             return [];

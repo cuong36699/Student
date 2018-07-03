@@ -61,7 +61,6 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-
         $request->session()->put('search', $request
             ->has('search') ? $request->get('search') : ($request->session()
                 ->has('search') ? $request->session()->get('search') : ''));

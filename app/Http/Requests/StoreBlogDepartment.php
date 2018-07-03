@@ -24,9 +24,9 @@ class StoreBlogDepartment extends FormRequest
     public function rules()
     {
         return [
-            'department_name' => 'required|max:150|min:1',
+            'department_name' => 'required|max:150|min:1|unique:departments',
             'degree' => 'required|max:150|min:1',
-            'graduation_year' => 'required|numeric|max:10000|min:1',
+            'graduation_year' => 'required|numeric|min:1',
         ];
     }
     public function messages()
@@ -37,6 +37,7 @@ class StoreBlogDepartment extends FormRequest
                 'department_name.required' => 'Vui lòng chọn Tên khoa',
                 'department_name.min' => 'Tên khoa không được dưới 1 ký tự',
                 'department_name.max' => 'Tên khoa không được quá 150 ký tự',
+                'department_name.unique' => 'khoa đã tồn tại',
                 // Bậc học
                 'degree.required' => 'Vui lòng chọn Bậc học',
                 'degree.min' => 'Bậc học không được dưới 1 ký tự',
@@ -44,7 +45,6 @@ class StoreBlogDepartment extends FormRequest
                 // Bậc học
                 'graduation_year.required' => 'Vui lòng chọn Năm học',
                 'graduation_year.min' => 'Năm học không được dưới 1 ký tự',
-                'graduation_year.max' => 'Năm học không được quá 100 ký tự',
                 'graduation_year.numeric' => 'Năm học phải là số',
             ];
         }else{

@@ -14,6 +14,8 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/cssFontend/bootstrap.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/cssTeamplade/assets/css/flag-icon.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/cssTeamplade/assets/css/font-awesome.min.css') }}">
+        {{-- validate parsley--}}
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/cssFontend/parsley.css') }}">
     </head>
     <body>
         {{-- button on top --}}
@@ -113,8 +115,13 @@
     </body>
     {{-- scrip --}}
     <script type="text/javascript" src="{{ asset('js/fontend/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/fontend/parsleys.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/fontend/bootstrap.min.js') }}" ></script>
-    {{-- flash time out --}}
+    @if (config('app.locale') == 'vi')
+        <script src="{{ asset('js/backend/vi.js') }}"></script>
+    @else
+        <script src="{{ asset('js/backend/en.js') }}"></script>
+    @endif
     {{-- ontop --}}
     <script src="{{ asset('js/fontend/ontop.js') }}"></script>
     <script src="{{ asset('js/fontend/dycalendar.js') }}"></script>
